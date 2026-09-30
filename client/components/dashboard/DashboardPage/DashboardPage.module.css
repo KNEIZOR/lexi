@@ -1,0 +1,91 @@
+.page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 75% 10%,
+            rgba(124, 92, 246, 0.12),
+            transparent 30%
+        ),
+        #08080c;
+    color: #ffffff;
+}
+
+.backgroundGlow {
+    position: absolute;
+    top: 20%;
+    right: -180px;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: rgba(116, 86, 235, 0.08);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 24px 0 64px;
+}
+
+.error {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    text-align: center;
+}
+
+.errorIcon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid rgba(255, 100, 120, 0.3);
+    border-radius: 50%;
+    color: #ff8495;
+    background: rgba(255, 100, 120, 0.08);
+    font-weight: 700;
+}
+
+.error p {
+    margin: 0;
+    max-width: 360px;
+    color: #8f909c;
+    line-height: 1.6;
+}
+
+.error button {
+    min-height: 44px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    background: #7356e8;
+    font: inherit;
+    font-weight: 600;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.error button:hover {
+    background: #8368f2;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+    .container {
+        width: min(100% - 28px, 1180px);
+        padding-top: 14px;
+        padding-bottom: 40px;
+    }
+}

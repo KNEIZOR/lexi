@@ -1,0 +1,47 @@
+{
+    "page": {
+        "eyebrow": "YOUR LEARNING SPACE",
+        "title": "Your vocabulary journey.",
+        "description": "Keep learning, review what you know, and build your vocabulary one word at a time."
+    },
+
+    "header": {
+        "dashboard": "Dashboard",
+        "logout": "Log out",
+        "loggingOut": "Logging out..."
+    },
+
+    "stats": {
+        "title": "Your progress",
+        "totalWords": "Words learned",
+        "newWords": "New words",
+        "learningWords": "Learning",
+        "masteredWords": "Mastered",
+        "sessions": "Learning sessions",
+        "accuracy": "Accuracy",
+        "streak": "Day streak",
+        "attempts": "Attempts"
+    },
+
+    "level": {
+        "label": "Current level",
+        "description": "Your current learning level"
+    },
+
+    "actions": {
+        "title": "Keep going",
+        "description": "Ready for your next session?",
+        "startLearning": "Start learning",
+        "reviewWords": "Review words"
+    },
+
+    "empty": {
+        "title": "Your journey starts here.",
+        "description": "Complete your first learning session to see your progress appear on the dashboard."
+    },
+
+    "loading": "Loading your dashboard...",
+    "errors": {
+        "UNKNOWN_ERROR": "Unable to load your dashboard. Please try again."
+    }
+}

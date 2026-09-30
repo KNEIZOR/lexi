@@ -1,5 +1,5 @@
 import { AuthForm } from '@/components/auth/AuthForm';
-import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitcher';
+import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitcher/LanguageSwitcher';
 
 export default function RegisterPage() {
     return (
