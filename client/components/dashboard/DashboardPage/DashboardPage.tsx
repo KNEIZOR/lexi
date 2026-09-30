@@ -5,7 +5,6 @@ import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api/api-client';
 import { getDashboard, type DashboardData } from '@/lib/api/dashboard-api';
-import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
 import { DashboardWelcome } from '../DashboardWelcome/DashboardWelcome';
 import { DashboardStats } from '../DashboardStats/DashboardStats';
 import { DashboardActions } from '../DashboardActions/DashboardActions';
@@ -86,11 +85,6 @@ export function DashboardPage() {
             <div className={styles.backgroundGlow} />
 
             <div className={styles.container}>
-                <DashboardHeader
-                    userName={data.user.name}
-                    email={data.user.email}
-                />
-
                 <DashboardWelcome
                     name={data.user.name}
                     level={data.user.learningLevel}

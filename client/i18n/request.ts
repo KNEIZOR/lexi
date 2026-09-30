@@ -20,6 +20,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
         dashboard: (await import(`../messages/${locale}/dashboard.json`))
             .default,
+
+        navigation: (await import(`../messages/${locale}/navigation.json`))
+            .default,
     };
 
     return {
