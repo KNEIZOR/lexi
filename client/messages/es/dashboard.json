@@ -1,0 +1,48 @@
+{
+    "page": {
+        "eyebrow": "TU ESPACIO DE APRENDIZAJE",
+        "title": "Tu camino en el mundo de las palabras.",
+        "description": "Sigue aprendiendo, repasa lo que sabes y amplía tu vocabulario palabra por palabra."
+    },
+
+    "header": {
+        "dashboard": "Panel",
+        "logout": "Cerrar sesión",
+        "loggingOut": "Cerrando sesión..."
+    },
+
+    "stats": {
+        "title": "Tu progreso",
+        "totalWords": "Palabras aprendidas",
+        "newWords": "Palabras nuevas",
+        "learningWords": "En aprendizaje",
+        "masteredWords": "Dominadas",
+        "sessions": "Sesiones de aprendizaje",
+        "accuracy": "Precisión",
+        "streak": "Días consecutivos",
+        "attempts": "Intentos"
+    },
+
+    "level": {
+        "label": "Nivel actual",
+        "description": "Tu nivel de aprendizaje actual"
+    },
+
+    "actions": {
+        "title": "Sigue adelante",
+        "description": "¿Listo para tu próxima sesión?",
+        "startLearning": "Empezar a aprender",
+        "reviewWords": "Repasar palabras"
+    },
+
+    "empty": {
+        "title": "Tu camino comienza aquí.",
+        "description": "Completa tu primera sesión de aprendizaje para ver tu progreso."
+    },
+
+    "loading": "Cargando tu progreso...",
+
+    "errors": {
+        "UNKNOWN_ERROR": "No se ha podido cargar el panel. Inténtalo de nuevo."
+    }
+}

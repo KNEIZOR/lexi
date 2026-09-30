@@ -1,0 +1,48 @@
+{
+    "page": {
+        "eyebrow": "IL TUO SPAZIO DI APPRENDIMENTO",
+        "title": "Il tuo percorso nel mondo delle parole.",
+        "description": "Continua a imparare, ripassa ciò che conosci e amplia il tuo vocabolario una parola alla volta."
+    },
+
+    "header": {
+        "dashboard": "Dashboard",
+        "logout": "Esci",
+        "loggingOut": "Disconnessione..."
+    },
+
+    "stats": {
+        "title": "I tuoi progressi",
+        "totalWords": "Parole imparate",
+        "newWords": "Nuove parole",
+        "learningWords": "In apprendimento",
+        "masteredWords": "Padroneggiate",
+        "sessions": "Sessioni di apprendimento",
+        "accuracy": "Precisione",
+        "streak": "Giorni consecutivi",
+        "attempts": "Tentativi"
+    },
+
+    "level": {
+        "label": "Livello attuale",
+        "description": "Il tuo livello di apprendimento attuale"
+    },
+
+    "actions": {
+        "title": "Continua così",
+        "description": "Pronto per la prossima sessione?",
+        "startLearning": "Inizia a imparare",
+        "reviewWords": "Ripassa le parole"
+    },
+
+    "empty": {
+        "title": "Il tuo percorso inizia qui.",
+        "description": "Completa la tua prima sessione di apprendimento per vedere i tuoi progressi."
+    },
+
+    "loading": "Caricamento dei tuoi progressi...",
+
+    "errors": {
+        "UNKNOWN_ERROR": "Impossibile caricare la dashboard. Riprova."
+    }
+}
