@@ -1,0 +1,55 @@
+.switcher {
+    position: fixed;
+    z-index: 20;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    background: rgba(15, 15, 20, 0.65);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.button {
+    min-width: 38px;
+    height: 28px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #6e6f7a;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: transparent;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.button:hover {
+    color: #b9b1dc;
+}
+
+.button.active {
+    color: #ffffff;
+    background: rgba(133, 103, 245, 0.28);
+}
+
+.button:focus-visible {
+    outline: 2px solid rgba(139, 108, 255, 0.65);
+    outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+    .switcher {
+        top: 14px;
+        right: 14px;
+    }
+}

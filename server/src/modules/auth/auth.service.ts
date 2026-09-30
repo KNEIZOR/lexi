@@ -23,7 +23,9 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email already exists');
+      throw new ConflictException({
+        code: 'AUTH_EMAIL_ALREADY_EXISTS',
+      });
     }
 
     const passwordHash = await bcrypt.hash(dto.password, 12);
@@ -49,13 +51,17 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException({
+        code: 'AUTH_INVALID_CREDENTIALS',
+      });
     }
 
     const passwordValid = await bcrypt.compare(dto.password, user.passwordHash);
 
     if (!passwordValid) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException({
+        code: 'AUTH_INVALID_CREDENTIALS',
+      });
     }
 
     return this.createAuthResponse(user);
@@ -78,7 +84,9 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException({
+        code: 'AUTH_USER_NOT_FOUND',
+      });
     }
 
     return user;
