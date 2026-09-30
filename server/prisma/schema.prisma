@@ -1,0 +1,247 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum LanguageCode {
+  RU
+  EN
+  HY
+  DE
+  ES
+  FR
+  IT
+  PT
+  TR
+}
+
+enum LanguageLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum WordDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum LearningStatus {
+  NEW
+  LEARNING
+  MASTERED
+}
+
+enum AttemptResult {
+  CORRECT
+  INCORRECT
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         UserRole @default(USER)
+
+  nativeLanguageId String?
+  nativeLanguage   Language? @relation("UserNativeLanguage", fields: [nativeLanguageId], references: [id])
+
+  learningLevel LanguageLevel @default(A1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userWords        UserWord[]
+  learningSessions LearningSession[]
+  achievements     UserAchievement[]
+
+  @@index([nativeLanguageId])
+}
+
+model Language {
+  id   String       @id @default(cuid())
+  code LanguageCode @unique
+  name String
+
+  createdAt DateTime @default(now())
+
+  usersAsNativeLanguage User[] @relation("UserNativeLanguage")
+  words                 Word[]
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  icon        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  words Word[]
+
+  @@index([name])
+}
+
+model Word {
+  id String @id @default(cuid())
+
+  text        String
+  translation String
+
+  languageId String
+  language   Language @relation(fields: [languageId], references: [id])
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  level      LanguageLevel
+  difficulty WordDifficulty @default(MEDIUM)
+
+  transcription String?
+  audioUrl      String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  examples  WordExample[]
+  userWords UserWord[]
+  attempts  LearningAttempt[]
+
+  @@index([languageId])
+  @@index([categoryId])
+  @@index([level])
+  @@index([text])
+  @@unique([text, languageId, translation])
+}
+
+model WordExample {
+  id String @id @default(cuid())
+
+  wordId String
+  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  sentence    String
+  translation String?
+
+  createdAt DateTime @default(now())
+
+  @@index([wordId])
+}
+
+model UserWord {
+  id String @id @default(cuid())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  wordId String
+  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  status LearningStatus @default(NEW)
+
+  repetitions    Int @default(0)
+  correctAnswers Int @default(0)
+  wrongAnswers   Int @default(0)
+
+  easeFactor  Float @default(2.5)
+  intervalDays Int   @default(0)
+
+  lastReviewedAt DateTime?
+  nextReviewAt   DateTime?
+
+  isFavorite Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, wordId])
+  @@index([userId, status])
+  @@index([userId, nextReviewAt])
+  @@index([userId, isFavorite])
+}
+
+model LearningSession {
+  id String @id @default(cuid())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  startedAt  DateTime  @default(now())
+  completedAt DateTime?
+
+  totalWords     Int @default(0)
+  correctAnswers Int @default(0)
+  wrongAnswers   Int @default(0)
+
+  attempts LearningAttempt[]
+
+  @@index([userId, startedAt])
+}
+
+model LearningAttempt {
+  id String @id @default(cuid())
+
+  sessionId String
+  session   LearningSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  wordId String
+  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  result AttemptResult
+
+  responseTimeMs Int?
+
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([wordId])
+  @@index([createdAt])
+}
+
+model Achievement {
+  id String @id @default(cuid())
+
+  code        String  @unique
+  name        String
+  description String
+  icon        String?
+
+  requirement Int?
+
+  createdAt DateTime @default(now())
+
+  users UserAchievement[]
+}
+
+model UserAchievement {
+  id String @id @default(cuid())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  unlockedAt DateTime @default(now())
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+}
