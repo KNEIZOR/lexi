@@ -6,25 +6,36 @@ import {
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { PrismaService } from '../../prisma/prisma.service.js';
-import { LoginDto } from './dto/login.dto.js';
-import { RegisterDto } from './dto/register.dto.js';
+import type { LoginDto } from './dto/login.dto.js';
+import type { RegisterDto } from './dto/register.dto.js';
+
+export interface AuthResponse {
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    role: 'USER' | 'ADMIN';
+    nativeLanguageId: string | null;
+    activeLearningLanguageId: string | null;
+  };
+  token: string;
+}
 
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async register(dto: RegisterDto) {
-    const email = dto.email.trim().toLowerCase();
-
+  async register(dto: RegisterDto): Promise<AuthResponse> {
     const existingUser = await this.prisma.user.findUnique({
       where: {
-        email,
+        email: dto.email,
       },
     });
 
     if (existingUser) {
       throw new ConflictException({
         code: 'AUTH_EMAIL_ALREADY_EXISTS',
+        message: 'User with this email already exists',
       });
     }
 
@@ -32,35 +43,38 @@ export class AuthService {
 
     const user = await this.prisma.user.create({
       data: {
-        email,
+        email: dto.email,
         passwordHash,
-        name: dto.name?.trim() || null,
+        name: dto.name,
       },
     });
 
     return this.createAuthResponse(user);
   }
 
-  async login(dto: LoginDto) {
-    const email = dto.email.trim().toLowerCase();
-
+  async login(dto: LoginDto): Promise<AuthResponse> {
     const user = await this.prisma.user.findUnique({
       where: {
-        email,
+        email: dto.email,
       },
     });
 
     if (!user) {
       throw new UnauthorizedException({
         code: 'AUTH_INVALID_CREDENTIALS',
+        message: 'Invalid email or password',
       });
     }
 
-    const passwordValid = await bcrypt.compare(dto.password, user.passwordHash);
+    const passwordMatches = await bcrypt.compare(
+      dto.password,
+      user.passwordHash,
+    );
 
-    if (!passwordValid) {
+    if (!passwordMatches) {
       throw new UnauthorizedException({
         code: 'AUTH_INVALID_CREDENTIALS',
+        message: 'Invalid email or password',
       });
     }
 
@@ -77,15 +91,15 @@ export class AuthService {
         email: true,
         name: true,
         role: true,
-        learningLevel: true,
         nativeLanguageId: true,
-        createdAt: true,
+        activeLearningLanguageId: true,
       },
     });
 
     if (!user) {
       throw new UnauthorizedException({
         code: 'AUTH_USER_NOT_FOUND',
+        message: 'User not found',
       });
     }
 
@@ -97,37 +111,37 @@ export class AuthService {
     email: string;
     name: string | null;
     role: 'USER' | 'ADMIN';
-    learningLevel: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
-  }) {
-    const secret = process.env.JWT_SECRET;
+    nativeLanguageId: string | null;
+    activeLearningLanguageId: string | null;
+  }): AuthResponse {
+    const jwtSecret = process.env.JWT_SECRET;
 
-    if (!secret) {
-      throw new Error('JWT_SECRET is not defined');
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET is not defined in the environment.');
     }
 
     const token = jwt.sign(
       {
         sub: user.id,
         email: user.email,
-        name: user.name,
         role: user.role,
-        learningLevel: user.learningLevel,
       },
-      secret,
+      jwtSecret,
       {
         expiresIn: '7d',
       },
     );
 
     return {
-      token,
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
         role: user.role,
-        learningLevel: user.learningLevel,
+        nativeLanguageId: user.nativeLanguageId,
+        activeLearningLanguageId: user.activeLearningLanguageId,
       },
+      token,
     };
   }
 }

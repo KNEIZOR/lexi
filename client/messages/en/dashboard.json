@@ -43,5 +43,9 @@
     "loading": "Loading your dashboard...",
     "errors": {
         "UNKNOWN_ERROR": "Unable to load your dashboard. Please try again."
+    },
+    "language": {
+        "label": "Language",
+        "noLanguages": "No languages"
     }
 }

@@ -2,16 +2,26 @@ import { apiClient } from './api-client';
 
 export type UserRole = 'USER' | 'ADMIN';
 
-export type LearningLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
-
 export interface User {
     id: string;
     email: string;
     name: string | null;
     role: UserRole;
-    learningLevel: LearningLevel;
-    nativeLanguageId?: string | null;
-    createdAt?: string;
+    nativeLanguageId: string | null;
+    activeLearningLanguageId: string | null;
+}
+
+interface AuthResponse {
+    user: User;
+}
+
+interface LogoutResponse {
+    success: boolean;
+}
+
+export interface LoginInput {
+    email: string;
+    password: string;
 }
 
 export interface RegisterInput {
@@ -20,35 +30,32 @@ export interface RegisterInput {
     name?: string;
 }
 
-export interface LoginInput {
-    email: string;
-    password: string;
-}
-
-interface AuthResponse {
-    user: User;
-}
-
-export function register(input: RegisterInput): Promise<AuthResponse> {
-    return apiClient<AuthResponse>('/api/auth/register', {
+export async function login(input: LoginInput): Promise<User> {
+    const response = await apiClient<AuthResponse>('/api/auth/login', {
         method: 'POST',
         body: JSON.stringify(input),
     });
+
+    return response.user;
 }
 
-export function login(input: LoginInput): Promise<AuthResponse> {
-    return apiClient<AuthResponse>('/api/auth/login', {
+export async function register(input: RegisterInput): Promise<User> {
+    const response = await apiClient<AuthResponse>('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify(input),
     });
+
+    return response.user;
 }
 
-export function logout(): Promise<{ message: string }> {
-    return apiClient<{ message: string }>('/api/auth/logout', {
+export async function logout(): Promise<void> {
+    await apiClient<LogoutResponse>('/api/auth/logout', {
         method: 'POST',
     });
 }
 
-export function getMe(): Promise<User> {
-    return apiClient<User>('/api/auth/me');
+export async function getMe(): Promise<User> {
+    const response = await apiClient<User>('/api/auth/me');
+
+    return response;
 }

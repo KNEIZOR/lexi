@@ -1,0 +1,19 @@
+.page {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.languageSwitcher {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+
+@media (max-width: 520px) {
+    .languageSwitcher {
+        top: 16px;
+        right: 16px;
+    }
+}

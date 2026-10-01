@@ -41,6 +41,7 @@ export type LearningSessionSumAggregateOutputType = {
 export type LearningSessionMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  userLearningLanguageId: string | null
   startedAt: Date | null
   completedAt: Date | null
   totalWords: number | null
@@ -51,6 +52,7 @@ export type LearningSessionMinAggregateOutputType = {
 export type LearningSessionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  userLearningLanguageId: string | null
   startedAt: Date | null
   completedAt: Date | null
   totalWords: number | null
@@ -61,6 +63,7 @@ export type LearningSessionMaxAggregateOutputType = {
 export type LearningSessionCountAggregateOutputType = {
   id: number
   userId: number
+  userLearningLanguageId: number
   startedAt: number
   completedAt: number
   totalWords: number
@@ -85,6 +88,7 @@ export type LearningSessionSumAggregateInputType = {
 export type LearningSessionMinAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   startedAt?: true
   completedAt?: true
   totalWords?: true
@@ -95,6 +99,7 @@ export type LearningSessionMinAggregateInputType = {
 export type LearningSessionMaxAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   startedAt?: true
   completedAt?: true
   totalWords?: true
@@ -105,6 +110,7 @@ export type LearningSessionMaxAggregateInputType = {
 export type LearningSessionCountAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   startedAt?: true
   completedAt?: true
   totalWords?: true
@@ -202,6 +208,7 @@ export type LearningSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type LearningSessionGroupByOutputType = {
   id: string
   userId: string
+  userLearningLanguageId: string
   startedAt: Date
   completedAt: Date | null
   totalWords: number
@@ -235,24 +242,28 @@ export type LearningSessionWhereInput = {
   NOT?: Prisma.LearningSessionWhereInput | Prisma.LearningSessionWhereInput[]
   id?: Prisma.StringFilter<"LearningSession"> | string
   userId?: Prisma.StringFilter<"LearningSession"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"LearningSession"> | string
   startedAt?: Prisma.DateTimeFilter<"LearningSession"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"LearningSession"> | Date | string | null
   totalWords?: Prisma.IntFilter<"LearningSession"> | number
   correctAnswers?: Prisma.IntFilter<"LearningSession"> | number
   wrongAnswers?: Prisma.IntFilter<"LearningSession"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageScalarRelationFilter, Prisma.UserLearningLanguageWhereInput>
   attempts?: Prisma.LearningAttemptListRelationFilter
 }
 
 export type LearningSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalWords?: Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   wrongAnswers?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  userLearningLanguage?: Prisma.UserLearningLanguageOrderByWithRelationInput
   attempts?: Prisma.LearningAttemptOrderByRelationAggregateInput
 }
 
@@ -262,18 +273,21 @@ export type LearningSessionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LearningSessionWhereInput[]
   NOT?: Prisma.LearningSessionWhereInput | Prisma.LearningSessionWhereInput[]
   userId?: Prisma.StringFilter<"LearningSession"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"LearningSession"> | string
   startedAt?: Prisma.DateTimeFilter<"LearningSession"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"LearningSession"> | Date | string | null
   totalWords?: Prisma.IntFilter<"LearningSession"> | number
   correctAnswers?: Prisma.IntFilter<"LearningSession"> | number
   wrongAnswers?: Prisma.IntFilter<"LearningSession"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageScalarRelationFilter, Prisma.UserLearningLanguageWhereInput>
   attempts?: Prisma.LearningAttemptListRelationFilter
 }, "id">
 
 export type LearningSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalWords?: Prisma.SortOrder
@@ -292,6 +306,7 @@ export type LearningSessionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LearningSessionScalarWhereWithAggregatesInput | Prisma.LearningSessionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"LearningSession"> | string
   userId?: Prisma.StringWithAggregatesFilter<"LearningSession"> | string
+  userLearningLanguageId?: Prisma.StringWithAggregatesFilter<"LearningSession"> | string
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"LearningSession"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LearningSession"> | Date | string | null
   totalWords?: Prisma.IntWithAggregatesFilter<"LearningSession"> | number
@@ -307,12 +322,14 @@ export type LearningSessionCreateInput = {
   correctAnswers?: number
   wrongAnswers?: number
   user: Prisma.UserCreateNestedOneWithoutLearningSessionsInput
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutLearningSessionsInput
   attempts?: Prisma.LearningAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LearningSessionUncheckedCreateInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   startedAt?: Date | string
   completedAt?: Date | string | null
   totalWords?: number
@@ -329,12 +346,14 @@ export type LearningSessionUpdateInput = {
   correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
   wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutLearningSessionsNestedInput
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutLearningSessionsNestedInput
   attempts?: Prisma.LearningAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LearningSessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
@@ -346,6 +365,7 @@ export type LearningSessionUncheckedUpdateInput = {
 export type LearningSessionCreateManyInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   startedAt?: Date | string
   completedAt?: Date | string | null
   totalWords?: number
@@ -365,6 +385,7 @@ export type LearningSessionUpdateManyMutationInput = {
 export type LearningSessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
@@ -385,6 +406,7 @@ export type LearningSessionOrderByRelationAggregateInput = {
 export type LearningSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   totalWords?: Prisma.SortOrder
@@ -401,6 +423,7 @@ export type LearningSessionAvgOrderByAggregateInput = {
 export type LearningSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   totalWords?: Prisma.SortOrder
@@ -411,6 +434,7 @@ export type LearningSessionMaxOrderByAggregateInput = {
 export type LearningSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   totalWords?: Prisma.SortOrder
@@ -471,6 +495,48 @@ export type LearningSessionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.LearningSessionScalarWhereInput | Prisma.LearningSessionScalarWhereInput[]
 }
 
+export type LearningSessionCreateNestedManyWithoutUserLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.LearningSessionCreateWithoutUserLearningLanguageInput[] | Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput | Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.LearningSessionCreateManyUserLearningLanguageInputEnvelope
+  connect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+}
+
+export type LearningSessionUncheckedCreateNestedManyWithoutUserLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.LearningSessionCreateWithoutUserLearningLanguageInput[] | Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput | Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.LearningSessionCreateManyUserLearningLanguageInputEnvelope
+  connect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+}
+
+export type LearningSessionUpdateManyWithoutUserLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.LearningSessionCreateWithoutUserLearningLanguageInput[] | Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput | Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput[]
+  upsert?: Prisma.LearningSessionUpsertWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.LearningSessionUpsertWithWhereUniqueWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.LearningSessionCreateManyUserLearningLanguageInputEnvelope
+  set?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  disconnect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  delete?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  connect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  update?: Prisma.LearningSessionUpdateWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.LearningSessionUpdateWithWhereUniqueWithoutUserLearningLanguageInput[]
+  updateMany?: Prisma.LearningSessionUpdateManyWithWhereWithoutUserLearningLanguageInput | Prisma.LearningSessionUpdateManyWithWhereWithoutUserLearningLanguageInput[]
+  deleteMany?: Prisma.LearningSessionScalarWhereInput | Prisma.LearningSessionScalarWhereInput[]
+}
+
+export type LearningSessionUncheckedUpdateManyWithoutUserLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.LearningSessionCreateWithoutUserLearningLanguageInput[] | Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput | Prisma.LearningSessionCreateOrConnectWithoutUserLearningLanguageInput[]
+  upsert?: Prisma.LearningSessionUpsertWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.LearningSessionUpsertWithWhereUniqueWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.LearningSessionCreateManyUserLearningLanguageInputEnvelope
+  set?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  disconnect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  delete?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  connect?: Prisma.LearningSessionWhereUniqueInput | Prisma.LearningSessionWhereUniqueInput[]
+  update?: Prisma.LearningSessionUpdateWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.LearningSessionUpdateWithWhereUniqueWithoutUserLearningLanguageInput[]
+  updateMany?: Prisma.LearningSessionUpdateManyWithWhereWithoutUserLearningLanguageInput | Prisma.LearningSessionUpdateManyWithWhereWithoutUserLearningLanguageInput[]
+  deleteMany?: Prisma.LearningSessionScalarWhereInput | Prisma.LearningSessionScalarWhereInput[]
+}
+
 export type LearningSessionCreateNestedOneWithoutAttemptsInput = {
   create?: Prisma.XOR<Prisma.LearningSessionCreateWithoutAttemptsInput, Prisma.LearningSessionUncheckedCreateWithoutAttemptsInput>
   connectOrCreate?: Prisma.LearningSessionCreateOrConnectWithoutAttemptsInput
@@ -492,11 +558,13 @@ export type LearningSessionCreateWithoutUserInput = {
   totalWords?: number
   correctAnswers?: number
   wrongAnswers?: number
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutLearningSessionsInput
   attempts?: Prisma.LearningAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LearningSessionUncheckedCreateWithoutUserInput = {
   id?: string
+  userLearningLanguageId: string
   startedAt?: Date | string
   completedAt?: Date | string | null
   totalWords?: number
@@ -537,11 +605,60 @@ export type LearningSessionScalarWhereInput = {
   NOT?: Prisma.LearningSessionScalarWhereInput | Prisma.LearningSessionScalarWhereInput[]
   id?: Prisma.StringFilter<"LearningSession"> | string
   userId?: Prisma.StringFilter<"LearningSession"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"LearningSession"> | string
   startedAt?: Prisma.DateTimeFilter<"LearningSession"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"LearningSession"> | Date | string | null
   totalWords?: Prisma.IntFilter<"LearningSession"> | number
   correctAnswers?: Prisma.IntFilter<"LearningSession"> | number
   wrongAnswers?: Prisma.IntFilter<"LearningSession"> | number
+}
+
+export type LearningSessionCreateWithoutUserLearningLanguageInput = {
+  id?: string
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  totalWords?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+  user: Prisma.UserCreateNestedOneWithoutLearningSessionsInput
+  attempts?: Prisma.LearningAttemptCreateNestedManyWithoutSessionInput
+}
+
+export type LearningSessionUncheckedCreateWithoutUserLearningLanguageInput = {
+  id?: string
+  userId: string
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  totalWords?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+  attempts?: Prisma.LearningAttemptUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type LearningSessionCreateOrConnectWithoutUserLearningLanguageInput = {
+  where: Prisma.LearningSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput>
+}
+
+export type LearningSessionCreateManyUserLearningLanguageInputEnvelope = {
+  data: Prisma.LearningSessionCreateManyUserLearningLanguageInput | Prisma.LearningSessionCreateManyUserLearningLanguageInput[]
+  skipDuplicates?: boolean
+}
+
+export type LearningSessionUpsertWithWhereUniqueWithoutUserLearningLanguageInput = {
+  where: Prisma.LearningSessionWhereUniqueInput
+  update: Prisma.XOR<Prisma.LearningSessionUpdateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedUpdateWithoutUserLearningLanguageInput>
+  create: Prisma.XOR<Prisma.LearningSessionCreateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedCreateWithoutUserLearningLanguageInput>
+}
+
+export type LearningSessionUpdateWithWhereUniqueWithoutUserLearningLanguageInput = {
+  where: Prisma.LearningSessionWhereUniqueInput
+  data: Prisma.XOR<Prisma.LearningSessionUpdateWithoutUserLearningLanguageInput, Prisma.LearningSessionUncheckedUpdateWithoutUserLearningLanguageInput>
+}
+
+export type LearningSessionUpdateManyWithWhereWithoutUserLearningLanguageInput = {
+  where: Prisma.LearningSessionScalarWhereInput
+  data: Prisma.XOR<Prisma.LearningSessionUpdateManyMutationInput, Prisma.LearningSessionUncheckedUpdateManyWithoutUserLearningLanguageInput>
 }
 
 export type LearningSessionCreateWithoutAttemptsInput = {
@@ -552,11 +669,13 @@ export type LearningSessionCreateWithoutAttemptsInput = {
   correctAnswers?: number
   wrongAnswers?: number
   user: Prisma.UserCreateNestedOneWithoutLearningSessionsInput
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutLearningSessionsInput
 }
 
 export type LearningSessionUncheckedCreateWithoutAttemptsInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   startedAt?: Date | string
   completedAt?: Date | string | null
   totalWords?: number
@@ -588,11 +707,13 @@ export type LearningSessionUpdateWithoutAttemptsInput = {
   correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
   wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutLearningSessionsNestedInput
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutLearningSessionsNestedInput
 }
 
 export type LearningSessionUncheckedUpdateWithoutAttemptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
@@ -602,6 +723,7 @@ export type LearningSessionUncheckedUpdateWithoutAttemptsInput = {
 
 export type LearningSessionCreateManyUserInput = {
   id?: string
+  userLearningLanguageId: string
   startedAt?: Date | string
   completedAt?: Date | string | null
   totalWords?: number
@@ -616,11 +738,13 @@ export type LearningSessionUpdateWithoutUserInput = {
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
   correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
   wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutLearningSessionsNestedInput
   attempts?: Prisma.LearningAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LearningSessionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
@@ -631,6 +755,49 @@ export type LearningSessionUncheckedUpdateWithoutUserInput = {
 
 export type LearningSessionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalWords?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type LearningSessionCreateManyUserLearningLanguageInput = {
+  id?: string
+  userId: string
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  totalWords?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+}
+
+export type LearningSessionUpdateWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalWords?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  user?: Prisma.UserUpdateOneRequiredWithoutLearningSessionsNestedInput
+  attempts?: Prisma.LearningAttemptUpdateManyWithoutSessionNestedInput
+}
+
+export type LearningSessionUncheckedUpdateWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalWords?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  attempts?: Prisma.LearningAttemptUncheckedUpdateManyWithoutSessionNestedInput
+}
+
+export type LearningSessionUncheckedUpdateManyWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalWords?: Prisma.IntFieldUpdateOperationsInput | number
@@ -672,12 +839,14 @@ export type LearningSessionCountOutputTypeCountAttemptsArgs<ExtArgs extends runt
 export type LearningSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   startedAt?: boolean
   completedAt?: boolean
   totalWords?: boolean
   correctAnswers?: boolean
   wrongAnswers?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   attempts?: boolean | Prisma.LearningSession$attemptsArgs<ExtArgs>
   _count?: boolean | Prisma.LearningSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["learningSession"]>
@@ -685,28 +854,33 @@ export type LearningSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type LearningSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   startedAt?: boolean
   completedAt?: boolean
   totalWords?: boolean
   correctAnswers?: boolean
   wrongAnswers?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["learningSession"]>
 
 export type LearningSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   startedAt?: boolean
   completedAt?: boolean
   totalWords?: boolean
   correctAnswers?: boolean
   wrongAnswers?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["learningSession"]>
 
 export type LearningSessionSelectScalar = {
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   startedAt?: boolean
   completedAt?: boolean
   totalWords?: boolean
@@ -714,28 +888,33 @@ export type LearningSessionSelectScalar = {
   wrongAnswers?: boolean
 }
 
-export type LearningSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "startedAt" | "completedAt" | "totalWords" | "correctAnswers" | "wrongAnswers", ExtArgs["result"]["learningSession"]>
+export type LearningSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "userLearningLanguageId" | "startedAt" | "completedAt" | "totalWords" | "correctAnswers" | "wrongAnswers", ExtArgs["result"]["learningSession"]>
 export type LearningSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   attempts?: boolean | Prisma.LearningSession$attemptsArgs<ExtArgs>
   _count?: boolean | Prisma.LearningSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LearningSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
 }
 export type LearningSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
 }
 
 export type $LearningSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LearningSession"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    userLearningLanguage: Prisma.$UserLearningLanguagePayload<ExtArgs>
     attempts: Prisma.$LearningAttemptPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    userLearningLanguageId: string
     startedAt: Date
     completedAt: Date | null
     totalWords: number
@@ -1136,6 +1315,7 @@ readonly fields: LearningSessionFieldRefs;
 export interface Prisma__LearningSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userLearningLanguage<T extends Prisma.UserLearningLanguageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserLearningLanguageDefaultArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   attempts<T extends Prisma.LearningSession$attemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LearningSession$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LearningAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1168,6 +1348,7 @@ export interface Prisma__LearningSessionClient<T, Null = never, ExtArgs extends 
 export interface LearningSessionFieldRefs {
   readonly id: Prisma.FieldRef<"LearningSession", 'String'>
   readonly userId: Prisma.FieldRef<"LearningSession", 'String'>
+  readonly userLearningLanguageId: Prisma.FieldRef<"LearningSession", 'String'>
   readonly startedAt: Prisma.FieldRef<"LearningSession", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"LearningSession", 'DateTime'>
   readonly totalWords: Prisma.FieldRef<"LearningSession", 'Int'>

@@ -40,6 +40,102 @@
     line-height: 1.7;
 }
 
+/* ─────────────────────────────────────────────
+   RIGHT CONTROLS
+───────────────────────────────────────────── */
+
+.rightControls {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/* ─────────────────────────────────────────────
+   LANGUAGE SELECTOR
+───────────────────────────────────────────── */
+
+.languageSelector {
+    display: flex;
+    width: 150px;
+    min-width: 150px;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.languageLabel {
+    padding-left: 4px;
+    color: #62636e;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.selectWrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.flag {
+    position: absolute;
+    left: 11px;
+    z-index: 1;
+    pointer-events: none;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.selectWrapper select {
+    width: 100%;
+    height: 42px;
+    padding: 0 30px 0 32px;
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    outline: none;
+    background:
+        linear-gradient(45deg, transparent 50%, #6f707b 50%) calc(100% - 15px)
+            17px / 4px 4px no-repeat,
+        linear-gradient(135deg, #6f707b 50%, transparent 50%) calc(100% - 12px)
+            17px / 4px 4px no-repeat,
+        rgba(255, 255, 255, 0.025);
+    color: #d8d5e3;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 500;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.selectWrapper select:hover {
+    border-color: rgba(128, 104, 221, 0.35);
+    background-color: rgba(128, 104, 221, 0.06);
+}
+
+.selectWrapper select:focus-visible {
+    border-color: rgba(128, 104, 221, 0.6);
+    box-shadow: 0 0 0 3px rgba(128, 104, 221, 0.1);
+}
+
+.selectWrapper select:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.selectWrapper select option {
+    background: #17161d;
+    color: #f7f6fa;
+}
+
+/* ─────────────────────────────────────────────
+   LEVEL CARD
+───────────────────────────────────────────── */
+
 .level {
     display: flex;
     width: 150px;
@@ -70,19 +166,39 @@
     font-size: 38px;
     font-weight: 500;
     letter-spacing: -0.04em;
+    line-height: 1;
 }
 
 .levelDescription {
+    max-width: 110px;
     margin-top: 6px;
+    overflow: hidden;
     color: #5c5d67;
     font-size: 8px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
+/* ─────────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────────── */
 
 @media (max-width: 700px) {
     .section {
         align-items: flex-start;
         flex-direction: column;
         gap: 30px;
+    }
+
+    .rightControls {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .languageSelector {
+        width: 140px;
+        min-width: 140px;
     }
 
     .level {
@@ -94,5 +210,22 @@
 
     .level strong {
         font-size: 32px;
+    }
+}
+
+@media (max-width: 430px) {
+    .rightControls {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .languageSelector {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .level {
+        width: 120px;
+        min-width: 120px;
     }
 }

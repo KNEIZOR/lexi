@@ -5,5 +5,7 @@
     "words": "Parole",
     "profile": "Profilo",
     "logout": "Esci",
-    "loggingOut": "Disconnessione..."
+    "loggingOut": "Disconnessione...",
+    "openMenu": "Apri il menu di navigazione",
+    "closeMenu": "Chiudi il menu di navigazione"
 }

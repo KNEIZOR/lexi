@@ -175,6 +175,7 @@ export type LanguageWhereInput = {
   name?: Prisma.StringFilter<"Language"> | string
   createdAt?: Prisma.DateTimeFilter<"Language"> | Date | string
   usersAsNativeLanguage?: Prisma.UserListRelationFilter
+  learningUsers?: Prisma.UserLearningLanguageListRelationFilter
   words?: Prisma.WordListRelationFilter
 }
 
@@ -184,6 +185,7 @@ export type LanguageOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usersAsNativeLanguage?: Prisma.UserOrderByRelationAggregateInput
+  learningUsers?: Prisma.UserLearningLanguageOrderByRelationAggregateInput
   words?: Prisma.WordOrderByRelationAggregateInput
 }
 
@@ -196,6 +198,7 @@ export type LanguageWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Language"> | string
   createdAt?: Prisma.DateTimeFilter<"Language"> | Date | string
   usersAsNativeLanguage?: Prisma.UserListRelationFilter
+  learningUsers?: Prisma.UserLearningLanguageListRelationFilter
   words?: Prisma.WordListRelationFilter
 }, "id" | "code">
 
@@ -225,6 +228,7 @@ export type LanguageCreateInput = {
   name: string
   createdAt?: Date | string
   usersAsNativeLanguage?: Prisma.UserCreateNestedManyWithoutNativeLanguageInput
+  learningUsers?: Prisma.UserLearningLanguageCreateNestedManyWithoutLanguageInput
   words?: Prisma.WordCreateNestedManyWithoutLanguageInput
 }
 
@@ -234,6 +238,7 @@ export type LanguageUncheckedCreateInput = {
   name: string
   createdAt?: Date | string
   usersAsNativeLanguage?: Prisma.UserUncheckedCreateNestedManyWithoutNativeLanguageInput
+  learningUsers?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutLanguageInput
   words?: Prisma.WordUncheckedCreateNestedManyWithoutLanguageInput
 }
 
@@ -243,6 +248,7 @@ export type LanguageUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usersAsNativeLanguage?: Prisma.UserUpdateManyWithoutNativeLanguageNestedInput
+  learningUsers?: Prisma.UserLearningLanguageUpdateManyWithoutLanguageNestedInput
   words?: Prisma.WordUpdateManyWithoutLanguageNestedInput
 }
 
@@ -252,6 +258,7 @@ export type LanguageUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usersAsNativeLanguage?: Prisma.UserUncheckedUpdateManyWithoutNativeLanguageNestedInput
+  learningUsers?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutLanguageNestedInput
   words?: Prisma.WordUncheckedUpdateManyWithoutLanguageNestedInput
 }
 
@@ -327,6 +334,20 @@ export type EnumLanguageCodeFieldUpdateOperationsInput = {
   set?: $Enums.LanguageCode
 }
 
+export type LanguageCreateNestedOneWithoutLearningUsersInput = {
+  create?: Prisma.XOR<Prisma.LanguageCreateWithoutLearningUsersInput, Prisma.LanguageUncheckedCreateWithoutLearningUsersInput>
+  connectOrCreate?: Prisma.LanguageCreateOrConnectWithoutLearningUsersInput
+  connect?: Prisma.LanguageWhereUniqueInput
+}
+
+export type LanguageUpdateOneRequiredWithoutLearningUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.LanguageCreateWithoutLearningUsersInput, Prisma.LanguageUncheckedCreateWithoutLearningUsersInput>
+  connectOrCreate?: Prisma.LanguageCreateOrConnectWithoutLearningUsersInput
+  upsert?: Prisma.LanguageUpsertWithoutLearningUsersInput
+  connect?: Prisma.LanguageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LanguageUpdateToOneWithWhereWithoutLearningUsersInput, Prisma.LanguageUpdateWithoutLearningUsersInput>, Prisma.LanguageUncheckedUpdateWithoutLearningUsersInput>
+}
+
 export type LanguageCreateNestedOneWithoutWordsInput = {
   create?: Prisma.XOR<Prisma.LanguageCreateWithoutWordsInput, Prisma.LanguageUncheckedCreateWithoutWordsInput>
   connectOrCreate?: Prisma.LanguageCreateOrConnectWithoutWordsInput
@@ -346,6 +367,7 @@ export type LanguageCreateWithoutUsersAsNativeLanguageInput = {
   code: $Enums.LanguageCode
   name: string
   createdAt?: Date | string
+  learningUsers?: Prisma.UserLearningLanguageCreateNestedManyWithoutLanguageInput
   words?: Prisma.WordCreateNestedManyWithoutLanguageInput
 }
 
@@ -354,6 +376,7 @@ export type LanguageUncheckedCreateWithoutUsersAsNativeLanguageInput = {
   code: $Enums.LanguageCode
   name: string
   createdAt?: Date | string
+  learningUsers?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutLanguageInput
   words?: Prisma.WordUncheckedCreateNestedManyWithoutLanguageInput
 }
 
@@ -378,6 +401,7 @@ export type LanguageUpdateWithoutUsersAsNativeLanguageInput = {
   code?: Prisma.EnumLanguageCodeFieldUpdateOperationsInput | $Enums.LanguageCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningUsers?: Prisma.UserLearningLanguageUpdateManyWithoutLanguageNestedInput
   words?: Prisma.WordUpdateManyWithoutLanguageNestedInput
 }
 
@@ -386,6 +410,59 @@ export type LanguageUncheckedUpdateWithoutUsersAsNativeLanguageInput = {
   code?: Prisma.EnumLanguageCodeFieldUpdateOperationsInput | $Enums.LanguageCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningUsers?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutLanguageNestedInput
+  words?: Prisma.WordUncheckedUpdateManyWithoutLanguageNestedInput
+}
+
+export type LanguageCreateWithoutLearningUsersInput = {
+  id?: string
+  code: $Enums.LanguageCode
+  name: string
+  createdAt?: Date | string
+  usersAsNativeLanguage?: Prisma.UserCreateNestedManyWithoutNativeLanguageInput
+  words?: Prisma.WordCreateNestedManyWithoutLanguageInput
+}
+
+export type LanguageUncheckedCreateWithoutLearningUsersInput = {
+  id?: string
+  code: $Enums.LanguageCode
+  name: string
+  createdAt?: Date | string
+  usersAsNativeLanguage?: Prisma.UserUncheckedCreateNestedManyWithoutNativeLanguageInput
+  words?: Prisma.WordUncheckedCreateNestedManyWithoutLanguageInput
+}
+
+export type LanguageCreateOrConnectWithoutLearningUsersInput = {
+  where: Prisma.LanguageWhereUniqueInput
+  create: Prisma.XOR<Prisma.LanguageCreateWithoutLearningUsersInput, Prisma.LanguageUncheckedCreateWithoutLearningUsersInput>
+}
+
+export type LanguageUpsertWithoutLearningUsersInput = {
+  update: Prisma.XOR<Prisma.LanguageUpdateWithoutLearningUsersInput, Prisma.LanguageUncheckedUpdateWithoutLearningUsersInput>
+  create: Prisma.XOR<Prisma.LanguageCreateWithoutLearningUsersInput, Prisma.LanguageUncheckedCreateWithoutLearningUsersInput>
+  where?: Prisma.LanguageWhereInput
+}
+
+export type LanguageUpdateToOneWithWhereWithoutLearningUsersInput = {
+  where?: Prisma.LanguageWhereInput
+  data: Prisma.XOR<Prisma.LanguageUpdateWithoutLearningUsersInput, Prisma.LanguageUncheckedUpdateWithoutLearningUsersInput>
+}
+
+export type LanguageUpdateWithoutLearningUsersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumLanguageCodeFieldUpdateOperationsInput | $Enums.LanguageCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usersAsNativeLanguage?: Prisma.UserUpdateManyWithoutNativeLanguageNestedInput
+  words?: Prisma.WordUpdateManyWithoutLanguageNestedInput
+}
+
+export type LanguageUncheckedUpdateWithoutLearningUsersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumLanguageCodeFieldUpdateOperationsInput | $Enums.LanguageCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usersAsNativeLanguage?: Prisma.UserUncheckedUpdateManyWithoutNativeLanguageNestedInput
   words?: Prisma.WordUncheckedUpdateManyWithoutLanguageNestedInput
 }
 
@@ -395,6 +472,7 @@ export type LanguageCreateWithoutWordsInput = {
   name: string
   createdAt?: Date | string
   usersAsNativeLanguage?: Prisma.UserCreateNestedManyWithoutNativeLanguageInput
+  learningUsers?: Prisma.UserLearningLanguageCreateNestedManyWithoutLanguageInput
 }
 
 export type LanguageUncheckedCreateWithoutWordsInput = {
@@ -403,6 +481,7 @@ export type LanguageUncheckedCreateWithoutWordsInput = {
   name: string
   createdAt?: Date | string
   usersAsNativeLanguage?: Prisma.UserUncheckedCreateNestedManyWithoutNativeLanguageInput
+  learningUsers?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutLanguageInput
 }
 
 export type LanguageCreateOrConnectWithoutWordsInput = {
@@ -427,6 +506,7 @@ export type LanguageUpdateWithoutWordsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usersAsNativeLanguage?: Prisma.UserUpdateManyWithoutNativeLanguageNestedInput
+  learningUsers?: Prisma.UserLearningLanguageUpdateManyWithoutLanguageNestedInput
 }
 
 export type LanguageUncheckedUpdateWithoutWordsInput = {
@@ -435,6 +515,7 @@ export type LanguageUncheckedUpdateWithoutWordsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usersAsNativeLanguage?: Prisma.UserUncheckedUpdateManyWithoutNativeLanguageNestedInput
+  learningUsers?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutLanguageNestedInput
 }
 
 
@@ -444,11 +525,13 @@ export type LanguageUncheckedUpdateWithoutWordsInput = {
 
 export type LanguageCountOutputType = {
   usersAsNativeLanguage: number
+  learningUsers: number
   words: number
 }
 
 export type LanguageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usersAsNativeLanguage?: boolean | LanguageCountOutputTypeCountUsersAsNativeLanguageArgs
+  learningUsers?: boolean | LanguageCountOutputTypeCountLearningUsersArgs
   words?: boolean | LanguageCountOutputTypeCountWordsArgs
 }
 
@@ -472,6 +555,13 @@ export type LanguageCountOutputTypeCountUsersAsNativeLanguageArgs<ExtArgs extend
 /**
  * LanguageCountOutputType without action
  */
+export type LanguageCountOutputTypeCountLearningUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserLearningLanguageWhereInput
+}
+
+/**
+ * LanguageCountOutputType without action
+ */
 export type LanguageCountOutputTypeCountWordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WordWhereInput
 }
@@ -483,6 +573,7 @@ export type LanguageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   createdAt?: boolean
   usersAsNativeLanguage?: boolean | Prisma.Language$usersAsNativeLanguageArgs<ExtArgs>
+  learningUsers?: boolean | Prisma.Language$learningUsersArgs<ExtArgs>
   words?: boolean | Prisma.Language$wordsArgs<ExtArgs>
   _count?: boolean | Prisma.LanguageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["language"]>
@@ -511,6 +602,7 @@ export type LanguageSelectScalar = {
 export type LanguageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "createdAt", ExtArgs["result"]["language"]>
 export type LanguageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usersAsNativeLanguage?: boolean | Prisma.Language$usersAsNativeLanguageArgs<ExtArgs>
+  learningUsers?: boolean | Prisma.Language$learningUsersArgs<ExtArgs>
   words?: boolean | Prisma.Language$wordsArgs<ExtArgs>
   _count?: boolean | Prisma.LanguageCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -521,6 +613,7 @@ export type $LanguagePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Language"
   objects: {
     usersAsNativeLanguage: Prisma.$UserPayload<ExtArgs>[]
+    learningUsers: Prisma.$UserLearningLanguagePayload<ExtArgs>[]
     words: Prisma.$WordPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -923,6 +1016,7 @@ readonly fields: LanguageFieldRefs;
 export interface Prisma__LanguageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   usersAsNativeLanguage<T extends Prisma.Language$usersAsNativeLanguageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Language$usersAsNativeLanguageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  learningUsers<T extends Prisma.Language$learningUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Language$learningUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   words<T extends Prisma.Language$wordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Language$wordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1371,6 +1465,30 @@ export type Language$usersAsNativeLanguageArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Language.learningUsers
+ */
+export type Language$learningUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserLearningLanguage
+   */
+  select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserLearningLanguage
+   */
+  omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null
+  where?: Prisma.UserLearningLanguageWhereInput
+  orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[]
+  cursor?: Prisma.UserLearningLanguageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[]
 }
 
 /**

@@ -44,5 +44,9 @@
 
     "errors": {
         "UNKNOWN_ERROR": "Չհաջողվեց բեռնել Dashboard-ը։ Փորձիր կրկին։"
+    },
+    "language": {
+        "label": "Լեզու",
+        "noLanguages": "Լեզուներ չկան"
     }
 }

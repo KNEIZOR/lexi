@@ -1,0 +1,28 @@
+{
+    "selection": {
+        "eyebrow": "Vocabulario",
+        "title": "Elige un idioma",
+        "description": "Elige el idioma cuyo vocabulario quieres abrir.",
+        "loading": "Cargando idiomas...",
+        "error": "No se pudieron cargar los idiomas."
+    },
+    "language": {
+        "eyebrow": "Palabras",
+        "description": "Estudia las palabras recomendadas o crea tus propias categorías.",
+        "loading": "Cargando palabras...",
+        "error": "No se pudo abrir este idioma.",
+        "back": "← Todos los idiomas"
+    },
+    "tabs": {
+        "recommended": "Recomendadas",
+        "custom": "Personalizadas"
+    },
+    "recommended": {
+        "title": "Categorías recomendadas",
+        "description": "Aquí aparecerán las categorías y tarjetas de palabras añadidas al sistema."
+    },
+    "custom": {
+        "title": "Tus categorías",
+        "description": "Aquí podrás crear tus propias categorías y añadir palabras."
+    }
+}

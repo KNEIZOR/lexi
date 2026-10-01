@@ -1,0 +1,28 @@
+{
+    "selection": {
+        "eyebrow": "Vocabolario",
+        "title": "Scegli una lingua",
+        "description": "Scegli la lingua per cui vuoi aprire il vocabolario.",
+        "loading": "Caricamento delle lingue...",
+        "error": "Impossibile caricare le lingue."
+    },
+    "language": {
+        "eyebrow": "Parole",
+        "description": "Studia le parole consigliate o crea le tue categorie.",
+        "loading": "Caricamento delle parole...",
+        "error": "Impossibile aprire questa lingua.",
+        "back": "← Tutte le lingue"
+    },
+    "tabs": {
+        "recommended": "Consigliate",
+        "custom": "Personalizzate"
+    },
+    "recommended": {
+        "title": "Categorie consigliate",
+        "description": "Qui appariranno le categorie e le schede delle parole aggiunte al sistema."
+    },
+    "custom": {
+        "title": "Le tue categorie",
+        "description": "Qui potrai creare le tue categorie e aggiungere parole."
+    }
+}

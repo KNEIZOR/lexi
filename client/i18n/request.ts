@@ -1,4 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
+
 import { routing } from './routing';
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -23,6 +24,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
         navigation: (await import(`../messages/${locale}/navigation.json`))
             .default,
+
+        languages: (await import(`../messages/${locale}/languages.json`))
+            .default,
+
+        learning: (await import(`../messages/${locale}/learning.json`)).default,
+
+        words: (await import(`../messages/${locale}/words.json`)).default,
     };
 
     return {

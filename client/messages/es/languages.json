@@ -1,0 +1,35 @@
+{
+    "eyebrow": "Tu camino de aprendizaje",
+    "title": "Elige un idioma para aprender",
+    "description": "Elige el idioma que quieres aprender e indica tu nivel actual.",
+    "loading": "Cargando idiomas...",
+    "language": {
+        "title": "Idioma de aprendizaje",
+        "subtitle": "¿Qué idioma quieres aprender?"
+    },
+    "level": {
+        "title": "Tu nivel",
+        "subtitle": "Elige el nivel que mejor te describa."
+    },
+    "actions": {
+        "continue": "Empezar a aprender",
+        "saving": "Guardando..."
+    },
+    "errors": {
+        "load": "No se pudieron cargar los idiomas disponibles.",
+        "USER_LANGUAGE_ALREADY_EXISTS": "Este idioma ya ha sido añadido.",
+        "LANGUAGE_NOT_FOUND": "No se encontró el idioma seleccionado.",
+        "UNKNOWN_ERROR": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "names": {
+        "RU": "Ruso",
+        "EN": "Inglés",
+        "HY": "Armenio",
+        "DE": "Alemán",
+        "ES": "Español",
+        "FR": "Francés",
+        "IT": "Italiano",
+        "PT": "Portugués",
+        "TR": "Turco"
+    }
+}

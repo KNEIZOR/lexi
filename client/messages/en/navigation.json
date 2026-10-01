@@ -5,5 +5,7 @@
     "words": "Words",
     "profile": "Profile",
     "logout": "Log out",
-    "loggingOut": "Logging out..."
+    "loggingOut": "Logging out...",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu"
 }

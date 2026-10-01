@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
@@ -17,12 +17,40 @@ export function AppHeader() {
 
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    useEffect(() => {
+        if (!isMenuOpen) {
+            return;
+        }
+
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('keydown', handleEscape);
+
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+        };
+    }, [isMenuOpen]);
+
+    const handleNavigation = (
+        href: '/dashboard' | '/learning' | '/words' | '/profile',
+    ) => {
+        setIsMenuOpen(false);
+        router.push(href);
+    };
+
     const handleLogout = async () => {
         if (isLoggingOut) {
             return;
         }
 
         setIsLoggingOut(true);
+        setIsMenuOpen(false);
 
         try {
             await logout();
@@ -47,7 +75,7 @@ export function AppHeader() {
                     </div>
 
                     <nav
-                        className={styles.navigation}
+                        className={styles.desktopNavigation}
                         aria-label={t('ariaLabel')}
                     >
                         {NAVIGATION_ITEMS.map((item) => {
@@ -60,7 +88,7 @@ export function AppHeader() {
                                     className={`${styles.navItem} ${
                                         isActive ? styles.active : ''
                                     }`}
-                                    onClick={() => router.push(item.href)}
+                                    onClick={() => handleNavigation(item.href)}
                                 >
                                     {t(item.labelKey)}
                                 </button>
@@ -92,7 +120,85 @@ export function AppHeader() {
                     >
                         {isLoggingOut ? t('loggingOut') : t('logout')}
                     </button>
+
+                    <button
+                        type="button"
+                        className={`${styles.menuButton} ${
+                            isMenuOpen ? styles.menuButtonOpen : ''
+                        }`}
+                        onClick={() => setIsMenuOpen((previous) => !previous)}
+                        aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-navigation"
+                    >
+                        <span />
+                        <span />
+                        <span />
+                    </button>
                 </div>
+            </div>
+
+            <div
+                id="mobile-navigation"
+                className={`${styles.mobileMenu} ${
+                    isMenuOpen ? styles.mobileMenuOpen : ''
+                }`}
+            >
+                <nav
+                    className={styles.mobileNavigation}
+                    aria-label={t('ariaLabel')}
+                >
+                    {NAVIGATION_ITEMS.map((item) => {
+                        const isActive = pathname === item.href;
+
+                        return (
+                            <button
+                                key={item.href}
+                                type="button"
+                                className={`${styles.mobileNavItem} ${
+                                    isActive ? styles.mobileNavItemActive : ''
+                                }`}
+                                onClick={() => handleNavigation(item.href)}
+                            >
+                                <span>{t(item.labelKey)}</span>
+
+                                <span
+                                    className={styles.mobileArrow}
+                                    aria-hidden="true"
+                                >
+                                    →
+                                </span>
+                            </button>
+                        );
+                    })}
+
+                    <div className={styles.mobileUser}>
+                        <div className={styles.mobileUserIdentity}>
+                            <div className={styles.avatar}>
+                                {displayName.charAt(0).toUpperCase()}
+                            </div>
+
+                            <div className={styles.userInfo}>
+                                <span className={styles.name}>
+                                    {displayName}
+                                </span>
+
+                                <span className={styles.email}>
+                                    {user?.email}
+                                </span>
+                            </div>
+                        </div>
+
+                        <button
+                            type="button"
+                            className={styles.mobileLogout}
+                            onClick={handleLogout}
+                            disabled={isLoggingOut}
+                        >
+                            {isLoggingOut ? t('loggingOut') : t('logout')}
+                        </button>
+                    </div>
+                </nav>
             </div>
         </header>
     );

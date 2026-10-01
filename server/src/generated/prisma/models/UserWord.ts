@@ -45,6 +45,7 @@ export type UserWordSumAggregateOutputType = {
 export type UserWordMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  userLearningLanguageId: string | null
   wordId: string | null
   status: $Enums.LearningStatus | null
   repetitions: number | null
@@ -62,6 +63,7 @@ export type UserWordMinAggregateOutputType = {
 export type UserWordMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  userLearningLanguageId: string | null
   wordId: string | null
   status: $Enums.LearningStatus | null
   repetitions: number | null
@@ -79,6 +81,7 @@ export type UserWordMaxAggregateOutputType = {
 export type UserWordCountAggregateOutputType = {
   id: number
   userId: number
+  userLearningLanguageId: number
   wordId: number
   status: number
   repetitions: number
@@ -114,6 +117,7 @@ export type UserWordSumAggregateInputType = {
 export type UserWordMinAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   wordId?: true
   status?: true
   repetitions?: true
@@ -131,6 +135,7 @@ export type UserWordMinAggregateInputType = {
 export type UserWordMaxAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   wordId?: true
   status?: true
   repetitions?: true
@@ -148,6 +153,7 @@ export type UserWordMaxAggregateInputType = {
 export type UserWordCountAggregateInputType = {
   id?: true
   userId?: true
+  userLearningLanguageId?: true
   wordId?: true
   status?: true
   repetitions?: true
@@ -252,6 +258,7 @@ export type UserWordGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type UserWordGroupByOutputType = {
   id: string
   userId: string
+  userLearningLanguageId: string
   wordId: string
   status: $Enums.LearningStatus
   repetitions: number
@@ -292,6 +299,7 @@ export type UserWordWhereInput = {
   NOT?: Prisma.UserWordWhereInput | Prisma.UserWordWhereInput[]
   id?: Prisma.StringFilter<"UserWord"> | string
   userId?: Prisma.StringFilter<"UserWord"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"UserWord"> | string
   wordId?: Prisma.StringFilter<"UserWord"> | string
   status?: Prisma.EnumLearningStatusFilter<"UserWord"> | $Enums.LearningStatus
   repetitions?: Prisma.IntFilter<"UserWord"> | number
@@ -305,12 +313,14 @@ export type UserWordWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageScalarRelationFilter, Prisma.UserLearningLanguageWhereInput>
   word?: Prisma.XOR<Prisma.WordScalarRelationFilter, Prisma.WordWhereInput>
 }
 
 export type UserWordOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   wordId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -324,16 +334,18 @@ export type UserWordOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  userLearningLanguage?: Prisma.UserLearningLanguageOrderByWithRelationInput
   word?: Prisma.WordOrderByWithRelationInput
 }
 
 export type UserWordWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId_wordId?: Prisma.UserWordUserIdWordIdCompoundUniqueInput
+  userLearningLanguageId_wordId?: Prisma.UserWordUserLearningLanguageIdWordIdCompoundUniqueInput
   AND?: Prisma.UserWordWhereInput | Prisma.UserWordWhereInput[]
   OR?: Prisma.UserWordWhereInput[]
   NOT?: Prisma.UserWordWhereInput | Prisma.UserWordWhereInput[]
   userId?: Prisma.StringFilter<"UserWord"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"UserWord"> | string
   wordId?: Prisma.StringFilter<"UserWord"> | string
   status?: Prisma.EnumLearningStatusFilter<"UserWord"> | $Enums.LearningStatus
   repetitions?: Prisma.IntFilter<"UserWord"> | number
@@ -347,12 +359,14 @@ export type UserWordWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageScalarRelationFilter, Prisma.UserLearningLanguageWhereInput>
   word?: Prisma.XOR<Prisma.WordScalarRelationFilter, Prisma.WordWhereInput>
-}, "id" | "userId_wordId">
+}, "id" | "userLearningLanguageId_wordId">
 
 export type UserWordOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   wordId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -378,6 +392,7 @@ export type UserWordScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserWordScalarWhereWithAggregatesInput | Prisma.UserWordScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserWord"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserWord"> | string
+  userLearningLanguageId?: Prisma.StringWithAggregatesFilter<"UserWord"> | string
   wordId?: Prisma.StringWithAggregatesFilter<"UserWord"> | string
   status?: Prisma.EnumLearningStatusWithAggregatesFilter<"UserWord"> | $Enums.LearningStatus
   repetitions?: Prisma.IntWithAggregatesFilter<"UserWord"> | number
@@ -406,12 +421,14 @@ export type UserWordCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserWordsInput
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutUserWordsInput
   word: Prisma.WordCreateNestedOneWithoutUserWordsInput
 }
 
 export type UserWordUncheckedCreateInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   wordId: string
   status?: $Enums.LearningStatus
   repetitions?: number
@@ -440,12 +457,14 @@ export type UserWordUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserWordsNestedInput
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutUserWordsNestedInput
   word?: Prisma.WordUpdateOneRequiredWithoutUserWordsNestedInput
 }
 
 export type UserWordUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   wordId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -463,6 +482,7 @@ export type UserWordUncheckedUpdateInput = {
 export type UserWordCreateManyInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   wordId: string
   status?: $Enums.LearningStatus
   repetitions?: number
@@ -495,6 +515,7 @@ export type UserWordUpdateManyMutationInput = {
 export type UserWordUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   wordId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -519,14 +540,15 @@ export type UserWordOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UserWordUserIdWordIdCompoundUniqueInput = {
-  userId: string
+export type UserWordUserLearningLanguageIdWordIdCompoundUniqueInput = {
+  userLearningLanguageId: string
   wordId: string
 }
 
 export type UserWordCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   wordId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -552,6 +574,7 @@ export type UserWordAvgOrderByAggregateInput = {
 export type UserWordMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   wordId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -569,6 +592,7 @@ export type UserWordMaxOrderByAggregateInput = {
 export type UserWordMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  userLearningLanguageId?: Prisma.SortOrder
   wordId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -630,6 +654,48 @@ export type UserWordUncheckedUpdateManyWithoutUserNestedInput = {
   connect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
   update?: Prisma.UserWordUpdateWithWhereUniqueWithoutUserInput | Prisma.UserWordUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.UserWordUpdateManyWithWhereWithoutUserInput | Prisma.UserWordUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.UserWordScalarWhereInput | Prisma.UserWordScalarWhereInput[]
+}
+
+export type UserWordCreateNestedManyWithoutUserLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.UserWordCreateWithoutUserLearningLanguageInput[] | Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput | Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.UserWordCreateManyUserLearningLanguageInputEnvelope
+  connect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+}
+
+export type UserWordUncheckedCreateNestedManyWithoutUserLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.UserWordCreateWithoutUserLearningLanguageInput[] | Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput | Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.UserWordCreateManyUserLearningLanguageInputEnvelope
+  connect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+}
+
+export type UserWordUpdateManyWithoutUserLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.UserWordCreateWithoutUserLearningLanguageInput[] | Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput | Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput[]
+  upsert?: Prisma.UserWordUpsertWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.UserWordUpsertWithWhereUniqueWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.UserWordCreateManyUserLearningLanguageInputEnvelope
+  set?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  disconnect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  delete?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  connect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  update?: Prisma.UserWordUpdateWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.UserWordUpdateWithWhereUniqueWithoutUserLearningLanguageInput[]
+  updateMany?: Prisma.UserWordUpdateManyWithWhereWithoutUserLearningLanguageInput | Prisma.UserWordUpdateManyWithWhereWithoutUserLearningLanguageInput[]
+  deleteMany?: Prisma.UserWordScalarWhereInput | Prisma.UserWordScalarWhereInput[]
+}
+
+export type UserWordUncheckedUpdateManyWithoutUserLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput> | Prisma.UserWordCreateWithoutUserLearningLanguageInput[] | Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput | Prisma.UserWordCreateOrConnectWithoutUserLearningLanguageInput[]
+  upsert?: Prisma.UserWordUpsertWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.UserWordUpsertWithWhereUniqueWithoutUserLearningLanguageInput[]
+  createMany?: Prisma.UserWordCreateManyUserLearningLanguageInputEnvelope
+  set?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  disconnect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  delete?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  connect?: Prisma.UserWordWhereUniqueInput | Prisma.UserWordWhereUniqueInput[]
+  update?: Prisma.UserWordUpdateWithWhereUniqueWithoutUserLearningLanguageInput | Prisma.UserWordUpdateWithWhereUniqueWithoutUserLearningLanguageInput[]
+  updateMany?: Prisma.UserWordUpdateManyWithWhereWithoutUserLearningLanguageInput | Prisma.UserWordUpdateManyWithWhereWithoutUserLearningLanguageInput[]
   deleteMany?: Prisma.UserWordScalarWhereInput | Prisma.UserWordScalarWhereInput[]
 }
 
@@ -712,11 +778,13 @@ export type UserWordCreateWithoutUserInput = {
   isFavorite?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutUserWordsInput
   word: Prisma.WordCreateNestedOneWithoutUserWordsInput
 }
 
 export type UserWordUncheckedCreateWithoutUserInput = {
   id?: string
+  userLearningLanguageId: string
   wordId: string
   status?: $Enums.LearningStatus
   repetitions?: number
@@ -763,6 +831,7 @@ export type UserWordScalarWhereInput = {
   NOT?: Prisma.UserWordScalarWhereInput | Prisma.UserWordScalarWhereInput[]
   id?: Prisma.StringFilter<"UserWord"> | string
   userId?: Prisma.StringFilter<"UserWord"> | string
+  userLearningLanguageId?: Prisma.StringFilter<"UserWord"> | string
   wordId?: Prisma.StringFilter<"UserWord"> | string
   status?: Prisma.EnumLearningStatusFilter<"UserWord"> | $Enums.LearningStatus
   repetitions?: Prisma.IntFilter<"UserWord"> | number
@@ -775,6 +844,66 @@ export type UserWordScalarWhereInput = {
   isFavorite?: Prisma.BoolFilter<"UserWord"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserWord"> | Date | string
+}
+
+export type UserWordCreateWithoutUserLearningLanguageInput = {
+  id?: string
+  status?: $Enums.LearningStatus
+  repetitions?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+  easeFactor?: number
+  intervalDays?: number
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  isFavorite?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutUserWordsInput
+  word: Prisma.WordCreateNestedOneWithoutUserWordsInput
+}
+
+export type UserWordUncheckedCreateWithoutUserLearningLanguageInput = {
+  id?: string
+  userId: string
+  wordId: string
+  status?: $Enums.LearningStatus
+  repetitions?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+  easeFactor?: number
+  intervalDays?: number
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  isFavorite?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserWordCreateOrConnectWithoutUserLearningLanguageInput = {
+  where: Prisma.UserWordWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput>
+}
+
+export type UserWordCreateManyUserLearningLanguageInputEnvelope = {
+  data: Prisma.UserWordCreateManyUserLearningLanguageInput | Prisma.UserWordCreateManyUserLearningLanguageInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserWordUpsertWithWhereUniqueWithoutUserLearningLanguageInput = {
+  where: Prisma.UserWordWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserWordUpdateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedUpdateWithoutUserLearningLanguageInput>
+  create: Prisma.XOR<Prisma.UserWordCreateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedCreateWithoutUserLearningLanguageInput>
+}
+
+export type UserWordUpdateWithWhereUniqueWithoutUserLearningLanguageInput = {
+  where: Prisma.UserWordWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserWordUpdateWithoutUserLearningLanguageInput, Prisma.UserWordUncheckedUpdateWithoutUserLearningLanguageInput>
+}
+
+export type UserWordUpdateManyWithWhereWithoutUserLearningLanguageInput = {
+  where: Prisma.UserWordScalarWhereInput
+  data: Prisma.XOR<Prisma.UserWordUpdateManyMutationInput, Prisma.UserWordUncheckedUpdateManyWithoutUserLearningLanguageInput>
 }
 
 export type UserWordCreateWithoutWordInput = {
@@ -791,11 +920,13 @@ export type UserWordCreateWithoutWordInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserWordsInput
+  userLearningLanguage: Prisma.UserLearningLanguageCreateNestedOneWithoutUserWordsInput
 }
 
 export type UserWordUncheckedCreateWithoutWordInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   status?: $Enums.LearningStatus
   repetitions?: number
   correctAnswers?: number
@@ -837,6 +968,7 @@ export type UserWordUpdateManyWithWhereWithoutWordInput = {
 
 export type UserWordCreateManyUserInput = {
   id?: string
+  userLearningLanguageId: string
   wordId: string
   status?: $Enums.LearningStatus
   repetitions?: number
@@ -864,11 +996,13 @@ export type UserWordUpdateWithoutUserInput = {
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutUserWordsNestedInput
   word?: Prisma.WordUpdateOneRequiredWithoutUserWordsNestedInput
 }
 
 export type UserWordUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   wordId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -885,6 +1019,75 @@ export type UserWordUncheckedUpdateWithoutUserInput = {
 
 export type UserWordUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
+  wordId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
+  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  intervalDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserWordCreateManyUserLearningLanguageInput = {
+  id?: string
+  userId: string
+  wordId: string
+  status?: $Enums.LearningStatus
+  repetitions?: number
+  correctAnswers?: number
+  wrongAnswers?: number
+  easeFactor?: number
+  intervalDays?: number
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  isFavorite?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserWordUpdateWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
+  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  intervalDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutUserWordsNestedInput
+  word?: Prisma.WordUpdateOneRequiredWithoutUserWordsNestedInput
+}
+
+export type UserWordUncheckedUpdateWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  wordId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
+  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongAnswers?: Prisma.IntFieldUpdateOperationsInput | number
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  intervalDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserWordUncheckedUpdateManyWithoutUserLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   wordId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -902,6 +1105,7 @@ export type UserWordUncheckedUpdateManyWithoutUserInput = {
 export type UserWordCreateManyWordInput = {
   id?: string
   userId: string
+  userLearningLanguageId: string
   status?: $Enums.LearningStatus
   repetitions?: number
   correctAnswers?: number
@@ -929,11 +1133,13 @@ export type UserWordUpdateWithoutWordInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserWordsNestedInput
+  userLearningLanguage?: Prisma.UserLearningLanguageUpdateOneRequiredWithoutUserWordsNestedInput
 }
 
 export type UserWordUncheckedUpdateWithoutWordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
@@ -950,6 +1156,7 @@ export type UserWordUncheckedUpdateWithoutWordInput = {
 export type UserWordUncheckedUpdateManyWithoutWordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userLearningLanguageId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLearningStatusFieldUpdateOperationsInput | $Enums.LearningStatus
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   correctAnswers?: Prisma.IntFieldUpdateOperationsInput | number
@@ -968,6 +1175,7 @@ export type UserWordUncheckedUpdateManyWithoutWordInput = {
 export type UserWordSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   wordId?: boolean
   status?: boolean
   repetitions?: boolean
@@ -981,12 +1189,14 @@ export type UserWordSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userWord"]>
 
 export type UserWordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   wordId?: boolean
   status?: boolean
   repetitions?: boolean
@@ -1000,12 +1210,14 @@ export type UserWordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userWord"]>
 
 export type UserWordSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   wordId?: boolean
   status?: boolean
   repetitions?: boolean
@@ -1019,12 +1231,14 @@ export type UserWordSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userWord"]>
 
 export type UserWordSelectScalar = {
   id?: boolean
   userId?: boolean
+  userLearningLanguageId?: boolean
   wordId?: boolean
   status?: boolean
   repetitions?: boolean
@@ -1039,17 +1253,20 @@ export type UserWordSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserWordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "wordId" | "status" | "repetitions" | "correctAnswers" | "wrongAnswers" | "easeFactor" | "intervalDays" | "lastReviewedAt" | "nextReviewAt" | "isFavorite" | "createdAt" | "updatedAt", ExtArgs["result"]["userWord"]>
+export type UserWordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "userLearningLanguageId" | "wordId" | "status" | "repetitions" | "correctAnswers" | "wrongAnswers" | "easeFactor" | "intervalDays" | "lastReviewedAt" | "nextReviewAt" | "isFavorite" | "createdAt" | "updatedAt", ExtArgs["result"]["userWord"]>
 export type UserWordInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }
 export type UserWordIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }
 export type UserWordIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userLearningLanguage?: boolean | Prisma.UserLearningLanguageDefaultArgs<ExtArgs>
   word?: boolean | Prisma.WordDefaultArgs<ExtArgs>
 }
 
@@ -1057,11 +1274,13 @@ export type $UserWordPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "UserWord"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    userLearningLanguage: Prisma.$UserLearningLanguagePayload<ExtArgs>
     word: Prisma.$WordPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    userLearningLanguageId: string
     wordId: string
     status: $Enums.LearningStatus
     repetitions: number
@@ -1469,6 +1688,7 @@ readonly fields: UserWordFieldRefs;
 export interface Prisma__UserWordClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userLearningLanguage<T extends Prisma.UserLearningLanguageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserLearningLanguageDefaultArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   word<T extends Prisma.WordDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WordDefaultArgs<ExtArgs>>): Prisma.Prisma__WordClient<runtime.Types.Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1501,6 +1721,7 @@ export interface Prisma__UserWordClient<T, Null = never, ExtArgs extends runtime
 export interface UserWordFieldRefs {
   readonly id: Prisma.FieldRef<"UserWord", 'String'>
   readonly userId: Prisma.FieldRef<"UserWord", 'String'>
+  readonly userLearningLanguageId: Prisma.FieldRef<"UserWord", 'String'>
   readonly wordId: Prisma.FieldRef<"UserWord", 'String'>
   readonly status: Prisma.FieldRef<"UserWord", 'LearningStatus'>
   readonly repetitions: Prisma.FieldRef<"UserWord", 'Int'>

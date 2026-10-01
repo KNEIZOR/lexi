@@ -60,16 +60,20 @@ model User {
   nativeLanguageId String?
   nativeLanguage   Language? @relation("UserNativeLanguage", fields: [nativeLanguageId], references: [id])
 
-  learningLevel LanguageLevel @default(A1)
+  activeLearningLanguageId String?
+  activeLearningLanguage   UserLearningLanguage? @relation("UserActiveLearningLanguage", fields: [activeLearningLanguageId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  learningLanguages UserLearningLanguage[] @relation("UserLearningLanguages")
 
   userWords        UserWord[]
   learningSessions LearningSession[]
   achievements     UserAchievement[]
 
   @@index([nativeLanguageId])
+  @@index([activeLearningLanguageId])
 }
 
 model Language {
@@ -79,8 +83,35 @@ model Language {
 
   createdAt DateTime @default(now())
 
-  usersAsNativeLanguage User[] @relation("UserNativeLanguage")
-  words                 Word[]
+  usersAsNativeLanguage User[]                 @relation("UserNativeLanguage")
+  learningUsers         UserLearningLanguage[]
+
+  words Word[]
+}
+
+model UserLearningLanguage {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation("UserLearningLanguages", fields: [userId], references: [id], onDelete: Cascade)
+
+  languageId String
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  level LanguageLevel @default(A1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  activeForUsers User[] @relation("UserActiveLearningLanguage")
+
+  userWords        UserWord[]
+  learningSessions LearningSession[]
+
+  @@unique([userId, languageId])
+  @@index([userId])
+  @@index([languageId])
+  @@index([userId, level])
 }
 
 model Category {
@@ -125,18 +156,18 @@ model Word {
   userWords UserWord[]
   attempts  LearningAttempt[]
 
+  @@unique([text, languageId, translation])
   @@index([languageId])
   @@index([categoryId])
   @@index([level])
   @@index([text])
-  @@unique([text, languageId, translation])
 }
 
 model WordExample {
   id String @id @default(cuid())
 
   wordId String
-  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  word   Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
 
   sentence    String
   translation String?
@@ -150,10 +181,13 @@ model UserWord {
   id String @id @default(cuid())
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userLearningLanguageId String
+  userLearningLanguage   UserLearningLanguage @relation(fields: [userLearningLanguageId], references: [id], onDelete: Cascade)
 
   wordId String
-  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  word   Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
 
   status LearningStatus @default(NEW)
 
@@ -161,7 +195,7 @@ model UserWord {
   correctAnswers Int @default(0)
   wrongAnswers   Int @default(0)
 
-  easeFactor  Float @default(2.5)
+  easeFactor   Float @default(2.5)
   intervalDays Int   @default(0)
 
   lastReviewedAt DateTime?
@@ -172,19 +206,24 @@ model UserWord {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([userId, wordId])
+  @@unique([userLearningLanguageId, wordId])
   @@index([userId, status])
   @@index([userId, nextReviewAt])
   @@index([userId, isFavorite])
+  @@index([userLearningLanguageId, status])
+  @@index([userLearningLanguageId, nextReviewAt])
 }
 
 model LearningSession {
   id String @id @default(cuid())
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  startedAt  DateTime  @default(now())
+  userLearningLanguageId String
+  userLearningLanguage   UserLearningLanguage @relation(fields: [userLearningLanguageId], references: [id], onDelete: Cascade)
+
+  startedAt   DateTime  @default(now())
   completedAt DateTime?
 
   totalWords     Int @default(0)
@@ -194,6 +233,7 @@ model LearningSession {
   attempts LearningAttempt[]
 
   @@index([userId, startedAt])
+  @@index([userLearningLanguageId, startedAt])
 }
 
 model LearningAttempt {
@@ -203,7 +243,7 @@ model LearningAttempt {
   session   LearningSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   wordId String
-  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  word   Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
 
   result AttemptResult
 
@@ -235,7 +275,7 @@ model UserAchievement {
   id String @id @default(cuid())
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   achievementId String
   achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)

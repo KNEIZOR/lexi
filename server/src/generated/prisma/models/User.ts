@@ -31,7 +31,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   role: $Enums.UserRole | null
   nativeLanguageId: string | null
-  learningLevel: $Enums.LanguageLevel | null
+  activeLearningLanguageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -43,7 +43,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   role: $Enums.UserRole | null
   nativeLanguageId: string | null
-  learningLevel: $Enums.LanguageLevel | null
+  activeLearningLanguageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,7 +55,7 @@ export type UserCountAggregateOutputType = {
   name: number
   role: number
   nativeLanguageId: number
-  learningLevel: number
+  activeLearningLanguageId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -69,7 +69,7 @@ export type UserMinAggregateInputType = {
   name?: true
   role?: true
   nativeLanguageId?: true
-  learningLevel?: true
+  activeLearningLanguageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -81,7 +81,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   role?: true
   nativeLanguageId?: true
-  learningLevel?: true
+  activeLearningLanguageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -93,7 +93,7 @@ export type UserCountAggregateInputType = {
   name?: true
   role?: true
   nativeLanguageId?: true
-  learningLevel?: true
+  activeLearningLanguageId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -178,7 +178,7 @@ export type UserGroupByOutputType = {
   name: string | null
   role: $Enums.UserRole
   nativeLanguageId: string | null
-  learningLevel: $Enums.LanguageLevel
+  activeLearningLanguageId: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -211,10 +211,12 @@ export type UserWhereInput = {
   name?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   nativeLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFilter<"User"> | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   nativeLanguage?: Prisma.XOR<Prisma.LanguageNullableScalarRelationFilter, Prisma.LanguageWhereInput> | null
+  activeLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null
+  learningLanguages?: Prisma.UserLearningLanguageListRelationFilter
   userWords?: Prisma.UserWordListRelationFilter
   learningSessions?: Prisma.LearningSessionListRelationFilter
   achievements?: Prisma.UserAchievementListRelationFilter
@@ -227,10 +229,12 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   nativeLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder
-  learningLevel?: Prisma.SortOrder
+  activeLearningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   nativeLanguage?: Prisma.LanguageOrderByWithRelationInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageOrderByWithRelationInput
+  learningLanguages?: Prisma.UserLearningLanguageOrderByRelationAggregateInput
   userWords?: Prisma.UserWordOrderByRelationAggregateInput
   learningSessions?: Prisma.LearningSessionOrderByRelationAggregateInput
   achievements?: Prisma.UserAchievementOrderByRelationAggregateInput
@@ -246,10 +250,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   nativeLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFilter<"User"> | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   nativeLanguage?: Prisma.XOR<Prisma.LanguageNullableScalarRelationFilter, Prisma.LanguageWhereInput> | null
+  activeLearningLanguage?: Prisma.XOR<Prisma.UserLearningLanguageNullableScalarRelationFilter, Prisma.UserLearningLanguageWhereInput> | null
+  learningLanguages?: Prisma.UserLearningLanguageListRelationFilter
   userWords?: Prisma.UserWordListRelationFilter
   learningSessions?: Prisma.LearningSessionListRelationFilter
   achievements?: Prisma.UserAchievementListRelationFilter
@@ -262,7 +268,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   nativeLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder
-  learningLevel?: Prisma.SortOrder
+  activeLearningLanguageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -280,7 +286,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   nativeLanguageId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  learningLevel?: Prisma.EnumLanguageLevelWithAggregatesFilter<"User"> | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -291,10 +297,11 @@ export type UserCreateInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
   createdAt?: Date | string
   updatedAt?: Date | string
   nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
@@ -307,9 +314,10 @@ export type UserUncheckedCreateInput = {
   name?: string | null
   role?: $Enums.UserRole
   nativeLanguageId?: string | null
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -321,10 +329,11 @@ export type UserUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
@@ -337,9 +346,10 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -352,7 +362,7 @@ export type UserCreateManyInput = {
   name?: string | null
   role?: $Enums.UserRole
   nativeLanguageId?: string | null
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -363,7 +373,6 @@ export type UserUpdateManyMutationInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -375,7 +384,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,7 +396,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   nativeLanguageId?: Prisma.SortOrder
-  learningLevel?: Prisma.SortOrder
+  activeLearningLanguageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -399,7 +408,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   nativeLanguageId?: Prisma.SortOrder
-  learningLevel?: Prisma.SortOrder
+  activeLearningLanguageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -411,7 +420,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   nativeLanguageId?: Prisma.SortOrder
-  learningLevel?: Prisma.SortOrder
+  activeLearningLanguageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -441,10 +450,6 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
-}
-
-export type EnumLanguageLevelFieldUpdateOperationsInput = {
-  set?: $Enums.LanguageLevel
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -490,6 +495,62 @@ export type UserUncheckedUpdateManyWithoutNativeLanguageNestedInput = {
   connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
   update?: Prisma.UserUpdateWithWhereUniqueWithoutNativeLanguageInput | Prisma.UserUpdateWithWhereUniqueWithoutNativeLanguageInput[]
   updateMany?: Prisma.UserUpdateManyWithWhereWithoutNativeLanguageInput | Prisma.UserUpdateManyWithWhereWithoutNativeLanguageInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutLearningLanguagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLearningLanguagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedManyWithoutActiveLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[]
+  createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutActiveLearningLanguageInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[]
+  createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateOneRequiredWithoutLearningLanguagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLearningLanguagesInput
+  upsert?: Prisma.UserUpsertWithoutLearningLanguagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLearningLanguagesInput, Prisma.UserUpdateWithoutLearningLanguagesInput>, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>
+}
+
+export type UserUpdateManyWithoutActiveLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput[]
+  createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput | Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutActiveLearningLanguageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput> | Prisma.UserCreateWithoutActiveLearningLanguageInput[] | Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput | Prisma.UserCreateOrConnectWithoutActiveLearningLanguageInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput[]
+  createMany?: Prisma.UserCreateManyActiveLearningLanguageInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput | Prisma.UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput | Prisma.UserUpdateManyWithWhereWithoutActiveLearningLanguageInput[]
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
@@ -541,9 +602,10 @@ export type UserCreateWithoutNativeLanguageInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
   createdAt?: Date | string
   updatedAt?: Date | string
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
@@ -555,9 +617,10 @@ export type UserUncheckedCreateWithoutNativeLanguageInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -599,9 +662,141 @@ export type UserScalarWhereInput = {
   name?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   nativeLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFilter<"User"> | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+}
+
+export type UserCreateWithoutLearningLanguagesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
+  learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutLearningLanguagesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: $Enums.UserRole
+  nativeLanguageId?: string | null
+  activeLearningLanguageId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
+  learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutLearningLanguagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>
+}
+
+export type UserCreateWithoutActiveLearningLanguageInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
+  userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
+  learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutActiveLearningLanguageInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: $Enums.UserRole
+  nativeLanguageId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
+  userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
+  learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutActiveLearningLanguageInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput>
+}
+
+export type UserCreateManyActiveLearningLanguageInputEnvelope = {
+  data: Prisma.UserCreateManyActiveLearningLanguageInput | Prisma.UserCreateManyActiveLearningLanguageInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutLearningLanguagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLearningLanguagesInput, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLearningLanguagesInput, Prisma.UserUncheckedCreateWithoutLearningLanguagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLearningLanguagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLearningLanguagesInput, Prisma.UserUncheckedUpdateWithoutLearningLanguagesInput>
+}
+
+export type UserUpdateWithoutLearningLanguagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
+  learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLearningLanguagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
+  learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithWhereUniqueWithoutActiveLearningLanguageInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedUpdateWithoutActiveLearningLanguageInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedCreateWithoutActiveLearningLanguageInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutActiveLearningLanguageInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutActiveLearningLanguageInput, Prisma.UserUncheckedUpdateWithoutActiveLearningLanguageInput>
+}
+
+export type UserUpdateManyWithWhereWithoutActiveLearningLanguageInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutActiveLearningLanguageInput>
 }
 
 export type UserCreateWithoutUserWordsInput = {
@@ -610,10 +805,11 @@ export type UserCreateWithoutUserWordsInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
   createdAt?: Date | string
   updatedAt?: Date | string
   nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
 }
@@ -625,9 +821,10 @@ export type UserUncheckedCreateWithoutUserWordsInput = {
   name?: string | null
   role?: $Enums.UserRole
   nativeLanguageId?: string | null
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
 }
@@ -654,10 +851,11 @@ export type UserUpdateWithoutUserWordsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
 }
@@ -669,9 +867,10 @@ export type UserUncheckedUpdateWithoutUserWordsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -682,10 +881,11 @@ export type UserCreateWithoutLearningSessionsInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
   createdAt?: Date | string
   updatedAt?: Date | string
   nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
 }
@@ -697,9 +897,10 @@ export type UserUncheckedCreateWithoutLearningSessionsInput = {
   name?: string | null
   role?: $Enums.UserRole
   nativeLanguageId?: string | null
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
 }
@@ -726,10 +927,11 @@ export type UserUpdateWithoutLearningSessionsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
 }
@@ -741,9 +943,10 @@ export type UserUncheckedUpdateWithoutLearningSessionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -754,10 +957,11 @@ export type UserCreateWithoutAchievementsInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
   createdAt?: Date | string
   updatedAt?: Date | string
   nativeLanguage?: Prisma.LanguageCreateNestedOneWithoutUsersAsNativeLanguageInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageCreateNestedOneWithoutActiveForUsersInput
+  learningLanguages?: Prisma.UserLearningLanguageCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionCreateNestedManyWithoutUserInput
 }
@@ -769,9 +973,10 @@ export type UserUncheckedCreateWithoutAchievementsInput = {
   name?: string | null
   role?: $Enums.UserRole
   nativeLanguageId?: string | null
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedCreateNestedManyWithoutUserInput
   userWords?: Prisma.UserWordUncheckedCreateNestedManyWithoutUserInput
   learningSessions?: Prisma.LearningSessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -798,10 +1003,11 @@ export type UserUpdateWithoutAchievementsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
 }
@@ -813,9 +1019,10 @@ export type UserUncheckedUpdateWithoutAchievementsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -826,7 +1033,7 @@ export type UserCreateManyNativeLanguageInput = {
   passwordHash: string
   name?: string | null
   role?: $Enums.UserRole
-  learningLevel?: $Enums.LanguageLevel
+  activeLearningLanguageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -837,9 +1044,10 @@ export type UserUpdateWithoutNativeLanguageInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activeLearningLanguage?: Prisma.UserLearningLanguageUpdateOneWithoutActiveForUsersNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
@@ -851,9 +1059,10 @@ export type UserUncheckedUpdateWithoutNativeLanguageInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
   userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
   learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -865,7 +1074,59 @@ export type UserUncheckedUpdateManyWithoutNativeLanguageInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  learningLevel?: Prisma.EnumLanguageLevelFieldUpdateOperationsInput | $Enums.LanguageLevel
+  activeLearningLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserCreateManyActiveLearningLanguageInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: $Enums.UserRole
+  nativeLanguageId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutActiveLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nativeLanguage?: Prisma.LanguageUpdateOneWithoutUsersAsNativeLanguageNestedInput
+  learningLanguages?: Prisma.UserLearningLanguageUpdateManyWithoutUserNestedInput
+  userWords?: Prisma.UserWordUpdateManyWithoutUserNestedInput
+  learningSessions?: Prisma.LearningSessionUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutActiveLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  learningLanguages?: Prisma.UserLearningLanguageUncheckedUpdateManyWithoutUserNestedInput
+  userWords?: Prisma.UserWordUncheckedUpdateManyWithoutUserNestedInput
+  learningSessions?: Prisma.LearningSessionUncheckedUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutActiveLearningLanguageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  nativeLanguageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -876,12 +1137,14 @@ export type UserUncheckedUpdateManyWithoutNativeLanguageInput = {
  */
 
 export type UserCountOutputType = {
+  learningLanguages: number
   userWords: number
   learningSessions: number
   achievements: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  learningLanguages?: boolean | UserCountOutputTypeCountLearningLanguagesArgs
   userWords?: boolean | UserCountOutputTypeCountUserWordsArgs
   learningSessions?: boolean | UserCountOutputTypeCountLearningSessionsArgs
   achievements?: boolean | UserCountOutputTypeCountAchievementsArgs
@@ -895,6 +1158,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLearningLanguagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserLearningLanguageWhereInput
 }
 
 /**
@@ -926,10 +1196,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   role?: boolean
   nativeLanguageId?: boolean
-  learningLevel?: boolean
+  activeLearningLanguageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
+  learningLanguages?: boolean | Prisma.User$learningLanguagesArgs<ExtArgs>
   userWords?: boolean | Prisma.User$userWordsArgs<ExtArgs>
   learningSessions?: boolean | Prisma.User$learningSessionsArgs<ExtArgs>
   achievements?: boolean | Prisma.User$achievementsArgs<ExtArgs>
@@ -943,10 +1215,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   role?: boolean
   nativeLanguageId?: boolean
-  learningLevel?: boolean
+  activeLearningLanguageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -956,10 +1229,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   role?: boolean
   nativeLanguageId?: boolean
-  learningLevel?: boolean
+  activeLearningLanguageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -969,14 +1243,16 @@ export type UserSelectScalar = {
   name?: boolean
   role?: boolean
   nativeLanguageId?: boolean
-  learningLevel?: boolean
+  activeLearningLanguageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "nativeLanguageId" | "learningLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "nativeLanguageId" | "activeLearningLanguageId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
+  learningLanguages?: boolean | Prisma.User$learningLanguagesArgs<ExtArgs>
   userWords?: boolean | Prisma.User$userWordsArgs<ExtArgs>
   learningSessions?: boolean | Prisma.User$learningSessionsArgs<ExtArgs>
   achievements?: boolean | Prisma.User$achievementsArgs<ExtArgs>
@@ -984,15 +1260,19 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
 }
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   nativeLanguage?: boolean | Prisma.User$nativeLanguageArgs<ExtArgs>
+  activeLearningLanguage?: boolean | Prisma.User$activeLearningLanguageArgs<ExtArgs>
 }
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
     nativeLanguage: Prisma.$LanguagePayload<ExtArgs> | null
+    activeLearningLanguage: Prisma.$UserLearningLanguagePayload<ExtArgs> | null
+    learningLanguages: Prisma.$UserLearningLanguagePayload<ExtArgs>[]
     userWords: Prisma.$UserWordPayload<ExtArgs>[]
     learningSessions: Prisma.$LearningSessionPayload<ExtArgs>[]
     achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
@@ -1004,7 +1284,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string | null
     role: $Enums.UserRole
     nativeLanguageId: string | null
-    learningLevel: $Enums.LanguageLevel
+    activeLearningLanguageId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1402,6 +1682,8 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   nativeLanguage<T extends Prisma.User$nativeLanguageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$nativeLanguageArgs<ExtArgs>>): Prisma.Prisma__LanguageClient<runtime.Types.Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  activeLearningLanguage<T extends Prisma.User$activeLearningLanguageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activeLearningLanguageArgs<ExtArgs>>): Prisma.Prisma__UserLearningLanguageClient<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  learningLanguages<T extends Prisma.User$learningLanguagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$learningLanguagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLearningLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userWords<T extends Prisma.User$userWordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userWordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserWordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   learningSessions<T extends Prisma.User$learningSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$learningSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LearningSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   achievements<T extends Prisma.User$achievementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1440,7 +1722,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly nativeLanguageId: Prisma.FieldRef<"User", 'String'>
-  readonly learningLevel: Prisma.FieldRef<"User", 'LanguageLevel'>
+  readonly activeLearningLanguageId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1860,6 +2142,49 @@ export type User$nativeLanguageArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   include?: Prisma.LanguageInclude<ExtArgs> | null
   where?: Prisma.LanguageWhereInput
+}
+
+/**
+ * User.activeLearningLanguage
+ */
+export type User$activeLearningLanguageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserLearningLanguage
+   */
+  select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserLearningLanguage
+   */
+  omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null
+  where?: Prisma.UserLearningLanguageWhereInput
+}
+
+/**
+ * User.learningLanguages
+ */
+export type User$learningLanguagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserLearningLanguage
+   */
+  select?: Prisma.UserLearningLanguageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserLearningLanguage
+   */
+  omit?: Prisma.UserLearningLanguageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserLearningLanguageInclude<ExtArgs> | null
+  where?: Prisma.UserLearningLanguageWhereInput
+  orderBy?: Prisma.UserLearningLanguageOrderByWithRelationInput | Prisma.UserLearningLanguageOrderByWithRelationInput[]
+  cursor?: Prisma.UserLearningLanguageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserLearningLanguageScalarFieldEnum | Prisma.UserLearningLanguageScalarFieldEnum[]
 }
 
 /**

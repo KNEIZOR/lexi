@@ -5,5 +5,7 @@
     "words": "Palabras",
     "profile": "Perfil",
     "logout": "Cerrar sesión",
-    "loggingOut": "Cerrando sesión..."
+    "loggingOut": "Cerrando sesión...",
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación"
 }

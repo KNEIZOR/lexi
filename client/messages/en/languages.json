@@ -1,0 +1,35 @@
+{
+    "eyebrow": "Your learning journey",
+    "title": "Choose a language to learn",
+    "description": "Choose the language you want to learn and indicate your current level.",
+    "loading": "Loading languages...",
+    "language": {
+        "title": "Learning language",
+        "subtitle": "Which language do you want to learn?"
+    },
+    "level": {
+        "title": "Your level",
+        "subtitle": "Choose the level that best describes you."
+    },
+    "actions": {
+        "continue": "Start learning",
+        "saving": "Saving..."
+    },
+    "errors": {
+        "load": "Failed to load available languages.",
+        "USER_LANGUAGE_ALREADY_EXISTS": "This language has already been added.",
+        "LANGUAGE_NOT_FOUND": "The selected language was not found.",
+        "UNKNOWN_ERROR": "Something went wrong. Please try again."
+    },
+    "names": {
+        "RU": "Russian",
+        "EN": "English",
+        "HY": "Armenian",
+        "DE": "German",
+        "ES": "Spanish",
+        "FR": "French",
+        "IT": "Italian",
+        "PT": "Portuguese",
+        "TR": "Turkish"
+    }
+}

@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Language: 'Language',
+  UserLearningLanguage: 'UserLearningLanguage',
   Category: 'Category',
   Word: 'Word',
   WordExample: 'WordExample',
@@ -86,7 +87,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   role: 'role',
   nativeLanguageId: 'nativeLanguageId',
-  learningLevel: 'learningLevel',
+  activeLearningLanguageId: 'activeLearningLanguageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -102,6 +103,18 @@ export const LanguageScalarFieldEnum = {
 } as const
 
 export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
+
+
+export const UserLearningLanguageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageId: 'languageId',
+  level: 'level',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserLearningLanguageScalarFieldEnum = (typeof UserLearningLanguageScalarFieldEnum)[keyof typeof UserLearningLanguageScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -149,6 +162,7 @@ export type WordExampleScalarFieldEnum = (typeof WordExampleScalarFieldEnum)[key
 export const UserWordScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userLearningLanguageId: 'userLearningLanguageId',
   wordId: 'wordId',
   status: 'status',
   repetitions: 'repetitions',
@@ -169,6 +183,7 @@ export type UserWordScalarFieldEnum = (typeof UserWordScalarFieldEnum)[keyof typ
 export const LearningSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userLearningLanguageId: 'userLearningLanguageId',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   totalWords: 'totalWords',

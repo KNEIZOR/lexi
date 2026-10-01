@@ -15,16 +15,59 @@ export class DashboardService {
         email: true,
         name: true,
         role: true,
-        learningLevel: true,
         nativeLanguageId: true,
         createdAt: true,
+
+        activeLearningLanguage: {
+          select: {
+            id: true,
+            level: true,
+
+            language: {
+              select: {
+                id: true,
+                code: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
 
     if (!user) {
       throw new UnauthorizedException({
         code: 'AUTH_USER_NOT_FOUND',
+        message: 'User not found',
       });
+    }
+
+    const activeLearningLanguageId = user.activeLearningLanguage?.id ?? null;
+
+    if (!activeLearningLanguageId) {
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          nativeLanguageId: user.nativeLanguageId,
+          createdAt: user.createdAt,
+          activeLearningLanguage: null,
+        },
+
+        stats: {
+          totalWords: 0,
+          newWords: 0,
+          learningWords: 0,
+          masteredWords: 0,
+          totalSessions: 0,
+          totalAttempts: 0,
+          correctAnswers: 0,
+          accuracy: 0,
+          currentStreak: 0,
+        },
+      };
     }
 
     const [
@@ -34,18 +77,20 @@ export class DashboardService {
       masteredWords,
       totalSessions,
       totalAttempts,
-      correctAttempts,
-      attemptDates,
+      correctAnswers,
+      currentStreak,
     ] = await Promise.all([
       this.prisma.userWord.count({
         where: {
           userId,
+          userLearningLanguageId: activeLearningLanguageId,
         },
       }),
 
       this.prisma.userWord.count({
         where: {
           userId,
+          userLearningLanguageId: activeLearningLanguageId,
           status: 'NEW',
         },
       }),
@@ -53,6 +98,7 @@ export class DashboardService {
       this.prisma.userWord.count({
         where: {
           userId,
+          userLearningLanguageId: activeLearningLanguageId,
           status: 'LEARNING',
         },
       }),
@@ -60,6 +106,7 @@ export class DashboardService {
       this.prisma.userWord.count({
         where: {
           userId,
+          userLearningLanguageId: activeLearningLanguageId,
           status: 'MASTERED',
         },
       }),
@@ -67,6 +114,7 @@ export class DashboardService {
       this.prisma.learningSession.count({
         where: {
           userId,
+          userLearningLanguageId: activeLearningLanguageId,
         },
       }),
 
@@ -74,6 +122,7 @@ export class DashboardService {
         where: {
           session: {
             userId,
+            userLearningLanguageId: activeLearningLanguageId,
           },
         },
       }),
@@ -82,37 +131,31 @@ export class DashboardService {
         where: {
           session: {
             userId,
+            userLearningLanguageId: activeLearningLanguageId,
           },
           result: 'CORRECT',
         },
       }),
 
-      this.prisma.learningAttempt.findMany({
-        where: {
-          session: {
-            userId,
-          },
-        },
-        select: {
-          createdAt: true,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      }),
+      this.calculateCurrentStreak(userId, activeLearningLanguageId),
     ]);
 
     const accuracy =
       totalAttempts > 0
-        ? Math.round((correctAttempts / totalAttempts) * 100)
+        ? Math.round((correctAnswers / totalAttempts) * 100)
         : 0;
 
-    const currentStreak = this.calculateCurrentStreak(
-      attemptDates.map((attempt) => attempt.createdAt),
-    );
-
     return {
-      user,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        nativeLanguageId: user.nativeLanguageId,
+        createdAt: user.createdAt,
+        activeLearningLanguage: user.activeLearningLanguage,
+      },
+
       stats: {
         totalWords,
         newWords,
@@ -120,52 +163,74 @@ export class DashboardService {
         masteredWords,
         totalSessions,
         totalAttempts,
-        correctAnswers: correctAttempts,
+        correctAnswers,
         accuracy,
         currentStreak,
       },
     };
   }
 
-  private calculateCurrentStreak(dates: Date[]): number {
+  private async calculateCurrentStreak(
+    userId: string,
+    userLearningLanguageId: string,
+  ): Promise<number> {
+    const sessions = await this.prisma.learningSession.findMany({
+      where: {
+        userId,
+        userLearningLanguageId,
+        completedAt: {
+          not: null,
+        },
+      },
+      select: {
+        completedAt: true,
+      },
+      orderBy: {
+        completedAt: 'desc',
+      },
+    });
+
+    if (sessions.length === 0) {
+      return 0;
+    }
+
+    const uniqueDates = new Set<string>();
+
+    for (const session of sessions) {
+      if (!session.completedAt) {
+        continue;
+      }
+
+      uniqueDates.add(this.toDateKey(session.completedAt));
+    }
+
+    const dates = Array.from(uniqueDates).sort((a, b) => b.localeCompare(a));
+
     if (dates.length === 0) {
       return 0;
     }
 
-    const uniqueDays = new Set(dates.map((date) => this.toDateKey(date)));
-
-    const sortedDays = Array.from(uniqueDays).sort((a, b) =>
-      b.localeCompare(a),
-    );
-
-    if (sortedDays.length === 0) {
-      return 0;
-    }
-
     const today = this.toDateKey(new Date());
-    const yesterday = this.toDateKey(
-      new Date(Date.now() - 24 * 60 * 60 * 1000),
-    );
-
-    const latestDay = sortedDays[0];
-
-    if (latestDay !== today && latestDay !== yesterday) {
-      return 0;
-    }
 
     let streak = 0;
-    let expectedDate = new Date(`${latestDay}T00:00:00`);
+    let expectedDate = today;
 
-    for (const day of sortedDays) {
-      const expectedKey = this.toDateKey(expectedDate);
+    for (const date of dates) {
+      if (date === expectedDate) {
+        streak += 1;
+        expectedDate = this.getPreviousDate(expectedDate);
 
-      if (day !== expectedKey) {
-        break;
+        continue;
       }
 
-      streak += 1;
+      if (streak === 0 && date === this.getPreviousDate(expectedDate)) {
+        streak += 1;
+        expectedDate = this.getPreviousDate(date);
 
-      expectedDate = new Date(expectedDate.getTime() - 24 * 60 * 60 * 1000);
+        continue;
+      }
+
+      break;
     }
 
     return streak;
@@ -177,5 +242,13 @@ export class DashboardService {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+  }
+
+  private getPreviousDate(dateKey: string): string {
+    const date = new Date(`${dateKey}T00:00:00`);
+
+    date.setDate(date.getDate() - 1);
+
+    return this.toDateKey(date);
   }
 }

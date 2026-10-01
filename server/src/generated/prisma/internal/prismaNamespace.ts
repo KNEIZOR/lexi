@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Language: 'Language',
+  UserLearningLanguage: 'UserLearningLanguage',
   Category: 'Category',
   Word: 'Word',
   WordExample: 'WordExample',
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "language" | "category" | "word" | "wordExample" | "userWord" | "learningSession" | "learningAttempt" | "achievement" | "userAchievement"
+    modelProps: "user" | "language" | "userLearningLanguage" | "category" | "word" | "wordExample" | "userWord" | "learningSession" | "learningAttempt" | "achievement" | "userAchievement"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -571,6 +572,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LanguageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LanguageCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserLearningLanguage: {
+      payload: Prisma.$UserLearningLanguagePayload<ExtArgs>
+      fields: Prisma.UserLearningLanguageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserLearningLanguageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserLearningLanguageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        findFirst: {
+          args: Prisma.UserLearningLanguageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserLearningLanguageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        findMany: {
+          args: Prisma.UserLearningLanguageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        create: {
+          args: Prisma.UserLearningLanguageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        createMany: {
+          args: Prisma.UserLearningLanguageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserLearningLanguageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        delete: {
+          args: Prisma.UserLearningLanguageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        update: {
+          args: Prisma.UserLearningLanguageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserLearningLanguageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserLearningLanguageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserLearningLanguageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserLearningLanguageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLearningLanguagePayload>
+        }
+        aggregate: {
+          args: Prisma.UserLearningLanguageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserLearningLanguage>
+        }
+        groupBy: {
+          args: Prisma.UserLearningLanguageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLearningLanguageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserLearningLanguageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLearningLanguageCountAggregateOutputType> | number
         }
       }
     }
@@ -1212,7 +1287,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   role: 'role',
   nativeLanguageId: 'nativeLanguageId',
-  learningLevel: 'learningLevel',
+  activeLearningLanguageId: 'activeLearningLanguageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1228,6 +1303,18 @@ export const LanguageScalarFieldEnum = {
 } as const
 
 export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
+
+
+export const UserLearningLanguageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageId: 'languageId',
+  level: 'level',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserLearningLanguageScalarFieldEnum = (typeof UserLearningLanguageScalarFieldEnum)[keyof typeof UserLearningLanguageScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -1275,6 +1362,7 @@ export type WordExampleScalarFieldEnum = (typeof WordExampleScalarFieldEnum)[key
 export const UserWordScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userLearningLanguageId: 'userLearningLanguageId',
   wordId: 'wordId',
   status: 'status',
   repetitions: 'repetitions',
@@ -1295,6 +1383,7 @@ export type UserWordScalarFieldEnum = (typeof UserWordScalarFieldEnum)[keyof typ
 export const LearningSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userLearningLanguageId: 'userLearningLanguageId',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   totalWords: 'totalWords',
@@ -1399,20 +1488,6 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'LanguageLevel'
- */
-export type EnumLanguageLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LanguageLevel'>
-    
-
-
-/**
- * Reference to a field of type 'LanguageLevel[]'
- */
-export type ListEnumLanguageLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LanguageLevel[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1437,6 +1512,20 @@ export type EnumLanguageCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'LanguageCode[]'
  */
 export type ListEnumLanguageCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LanguageCode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LanguageLevel'
+ */
+export type EnumLanguageLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LanguageLevel'>
+    
+
+
+/**
+ * Reference to a field of type 'LanguageLevel[]'
+ */
+export type ListEnumLanguageLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LanguageLevel[]'>
     
 
 
@@ -1669,6 +1758,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   language?: Prisma.LanguageOmit
+  userLearningLanguage?: Prisma.UserLearningLanguageOmit
   category?: Prisma.CategoryOmit
   word?: Prisma.WordOmit
   wordExample?: Prisma.WordExampleOmit

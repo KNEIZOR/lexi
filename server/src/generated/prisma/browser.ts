@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Language = Prisma.LanguageModel
 /**
+ * Model UserLearningLanguage
+ * 
+ */
+export type UserLearningLanguage = Prisma.UserLearningLanguageModel
+/**
  * Model Category
  * 
  */

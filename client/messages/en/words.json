@@ -1,0 +1,28 @@
+{
+    "selection": {
+        "eyebrow": "Vocabulary",
+        "title": "Choose a language",
+        "description": "Choose the language for which you want to open the vocabulary.",
+        "loading": "Loading languages...",
+        "error": "Failed to load languages."
+    },
+    "language": {
+        "eyebrow": "Words",
+        "description": "Study recommended words or create your own categories.",
+        "loading": "Loading words...",
+        "error": "Failed to open this language.",
+        "back": "← All languages"
+    },
+    "tabs": {
+        "recommended": "Recommended",
+        "custom": "Custom"
+    },
+    "recommended": {
+        "title": "Recommended categories",
+        "description": "Categories and word cards added to the system will appear here."
+    },
+    "custom": {
+        "title": "Your categories",
+        "description": "Here you will be able to create your own categories and add words to them."
+    }
+}

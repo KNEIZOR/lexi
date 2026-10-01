@@ -1,14 +1,9 @@
 'use client';
 
-import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-    type ReactNode,
-} from 'react';
+import { useCallback, useMemo, type ReactNode } from 'react';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
     getMe,
     login as loginRequest,
@@ -19,117 +14,100 @@ import {
     type User,
 } from '@/lib/api/auth-api';
 
-interface AuthContextValue {
-    user: User | null;
-    isLoading: boolean;
-    isAuthenticated: boolean;
-    login: (input: LoginInput) => Promise<User>;
-    register: (input: RegisterInput) => Promise<User>;
-    logout: () => Promise<void>;
-    refreshUser: () => Promise<User | null>;
-}
+import { AuthContext } from './AuthContext';
 
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const AUTH_QUERY_KEY = ['auth', 'me'] as const;
 
 interface AuthProviderProps {
     children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const queryClient = useQueryClient();
 
-    const refreshUser = useCallback(async (): Promise<User | null> => {
-        try {
-            const currentUser = await getMe();
+    const { data: user = null, isLoading } = useQuery<User | null>({
+        queryKey: AUTH_QUERY_KEY,
+        queryFn: getMe,
+        retry: false,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
+        throwOnError: false,
+    });
 
-            setUser(currentUser);
+    const loginMutation = useMutation({
+        mutationFn: loginRequest,
+        onSuccess: (authenticatedUser) => {
+            queryClient.setQueryData(AUTH_QUERY_KEY, authenticatedUser);
+        },
+    });
 
-            return currentUser;
-        } catch {
-            setUser(null);
+    const registerMutation = useMutation({
+        mutationFn: registerRequest,
+        onSuccess: (registeredUser) => {
+            queryClient.setQueryData(AUTH_QUERY_KEY, registeredUser);
+        },
+    });
 
-            return null;
-        }
-    }, []);
+    const logoutMutation = useMutation({
+        mutationFn: logoutRequest,
+        onSuccess: () => {
+            queryClient.setQueryData(AUTH_QUERY_KEY, null);
+        },
+    });
 
-    useEffect(() => {
-        let mounted = true;
-
-        const initializeAuth = async () => {
-            try {
-                const currentUser = await getMe();
-
-                if (mounted) {
-                    setUser(currentUser);
-                }
-            } catch {
-                if (mounted) {
-                    setUser(null);
-                }
-            } finally {
-                if (mounted) {
-                    setIsLoading(false);
-                }
-            }
-        };
-
-        void initializeAuth();
-
-        return () => {
-            mounted = false;
-        };
-    }, []);
-
-    const login = useCallback(async (input: LoginInput): Promise<User> => {
-        const response = await loginRequest(input);
-
-        setUser(response.user);
-
-        return response.user;
-    }, []);
+    const login = useCallback(
+        async (input: LoginInput): Promise<User> => {
+            return loginMutation.mutateAsync(input);
+        },
+        [loginMutation],
+    );
 
     const register = useCallback(
         async (input: RegisterInput): Promise<User> => {
-            const response = await registerRequest(input);
-
-            setUser(response.user);
-
-            return response.user;
+            return registerMutation.mutateAsync(input);
         },
-        [],
+        [registerMutation],
     );
 
     const logout = useCallback(async (): Promise<void> => {
-        await logoutRequest();
+        await logoutMutation.mutateAsync();
+    }, [logoutMutation]);
 
-        setUser(null);
-    }, []);
+    const refreshUser = useCallback(async (): Promise<void> => {
+        await queryClient.invalidateQueries({
+            queryKey: AUTH_QUERY_KEY,
+        });
+    }, [queryClient]);
 
-    const value = useMemo<AuthContextValue>(
+    const isAuthenticated = Boolean(user);
+    const isAdmin = user?.role === 'ADMIN';
+
+    const contextValue = useMemo(
         () => ({
             user,
             isLoading,
-            isAuthenticated: user !== null,
+            isAuthenticated,
+            isAdmin,
             login,
             register,
             logout,
             refreshUser,
         }),
-        [user, isLoading, login, register, logout, refreshUser],
+        [
+            user,
+            isLoading,
+            isAuthenticated,
+            isAdmin,
+            login,
+            register,
+            logout,
+            refreshUser,
+        ],
     );
 
     return (
-        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
     );
-}
-
-export function useAuth(): AuthContextValue {
-    const context = useContext(AuthContext);
-
-    if (!context) {
-        throw new Error('useAuth must be used inside an AuthProvider');
-    }
-
-    return context;
 }

@@ -10,6 +10,7 @@
  */
 export type * from './models/User.js'
 export type * from './models/Language.js'
+export type * from './models/UserLearningLanguage.js'
 export type * from './models/Category.js'
 export type * from './models/Word.js'
 export type * from './models/WordExample.js'

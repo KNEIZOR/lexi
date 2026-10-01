@@ -1,5 +1,7 @@
 import { apiClient } from './api-client';
-import type { LearningLevel, User } from './auth-api';
+import type { User } from './auth-api';
+
+export type LanguageLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 
 export interface DashboardStats {
     totalWords: number;
@@ -13,11 +15,21 @@ export interface DashboardStats {
     currentStreak: number;
 }
 
+export interface DashboardActiveLearningLanguage {
+    id: string;
+    level: LanguageLevel;
+    language: {
+        id: string;
+        code: 'RU' | 'EN' | 'HY' | 'DE' | 'ES' | 'FR' | 'IT' | 'PT' | 'TR';
+        name: string;
+    };
+}
+
 export interface DashboardData {
     user: User & {
-        learningLevel: LearningLevel;
         nativeLanguageId: string | null;
         createdAt: string;
+        activeLearningLanguage: DashboardActiveLearningLanguage | null;
     };
     stats: DashboardStats;
 }

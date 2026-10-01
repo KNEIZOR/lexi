@@ -1,0 +1,34 @@
+{
+    "selection": {
+        "eyebrow": "Apprendimento",
+        "title": "Scegli una lingua",
+        "description": "Scegli la lingua che vuoi imparare.",
+        "availableTitle": "Lingue disponibili",
+        "availableSubtitle": "Inizia a imparare una nuova lingua",
+        "addedTitle": "Le mie lingue",
+        "addedSubtitle": "Continua a imparare",
+        "loading": "Caricamento delle lingue...",
+        "error": "Impossibile caricare le lingue."
+    },
+    "language": {
+        "loading": "Caricamento della lingua...",
+        "error": "Lingua non trovata.",
+        "back": "← Tutte le lingue"
+    },
+    "level": {
+        "eyebrow": "Inizia a imparare",
+        "description": "Scegli il tuo livello attuale di conoscenza della lingua.",
+        "continue": "Continua",
+        "saving": "Salvataggio..."
+    },
+    "program": {
+        "eyebrow": "Programma di apprendimento",
+        "title": "Il programma di apprendimento sarà presto disponibile",
+        "description": "Qui apparirà il tuo programma di apprendimento personalizzato."
+    },
+    "errors": {
+        "USER_LANGUAGE_ALREADY_EXISTS": "Questa lingua è già stata aggiunta.",
+        "LANGUAGE_NOT_FOUND": "Lingua non trovata.",
+        "UNKNOWN_ERROR": "Qualcosa è andato storto."
+    }
+}

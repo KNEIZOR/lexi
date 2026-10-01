@@ -44,5 +44,6 @@
 
     "errors": {
         "UNKNOWN_ERROR": "No se ha podido cargar el panel. Inténtalo de nuevo."
-    }
+    },
+    "language": { "label": "Idioma", "noLanguages": "No hay idiomas" }
 }

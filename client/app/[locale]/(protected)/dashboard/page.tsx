@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { AppShell } from '@/components/app-shell/AppShell/AppShell';
 
 const DashboardPage = dynamic(() =>
     import('@/components/dashboard/DashboardPage/DashboardPage').then(
@@ -8,9 +7,5 @@ const DashboardPage = dynamic(() =>
 );
 
 export default function DashboardRoute() {
-    return (
-        <AppShell>
-            <DashboardPage />
-        </AppShell>
-    );
+    return <DashboardPage />;
 }

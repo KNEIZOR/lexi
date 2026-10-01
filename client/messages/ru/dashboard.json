@@ -43,5 +43,9 @@
     "loading": "Загружаем твой Dashboard...",
     "errors": {
         "UNKNOWN_ERROR": "Не удалось загрузить Dashboard. Попробуй ещё раз."
-    }
+    },
+    "language": {
+    "label": "Язык",
+    "noLanguages": "Нет языков"
+}
 }

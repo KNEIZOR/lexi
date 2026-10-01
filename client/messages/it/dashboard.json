@@ -44,5 +44,6 @@
 
     "errors": {
         "UNKNOWN_ERROR": "Impossibile caricare la dashboard. Riprova."
-    }
+    },
+    "language": { "label": "Lingua", "noLanguages": "Nessuna lingua" }
 }

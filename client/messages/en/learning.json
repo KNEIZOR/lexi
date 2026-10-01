@@ -1,0 +1,34 @@
+{
+    "selection": {
+        "eyebrow": "Learning",
+        "title": "Choose a language",
+        "description": "Choose the language you want to learn.",
+        "availableTitle": "Available languages",
+        "availableSubtitle": "Start learning a new language",
+        "addedTitle": "My languages",
+        "addedSubtitle": "Continue learning",
+        "loading": "Loading languages...",
+        "error": "Failed to load languages."
+    },
+    "language": {
+        "loading": "Loading language...",
+        "error": "Language not found.",
+        "back": "← All languages"
+    },
+    "level": {
+        "eyebrow": "Start learning",
+        "description": "Choose your current language level.",
+        "continue": "Continue",
+        "saving": "Saving..."
+    },
+    "program": {
+        "eyebrow": "Learning program",
+        "title": "Learning program coming soon",
+        "description": "Your personalized learning program will appear here."
+    },
+    "errors": {
+        "USER_LANGUAGE_ALREADY_EXISTS": "This language has already been added.",
+        "LANGUAGE_NOT_FOUND": "Language not found.",
+        "UNKNOWN_ERROR": "Something went wrong."
+    }
+}

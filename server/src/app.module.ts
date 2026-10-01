@@ -8,6 +8,7 @@ import { CategoriesModule } from './modules/categories/categories.module.js';
 import { WordsModule } from './modules/words/words.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { DashboardModule } from './modules/dashboard/dashboard.module.js';
+import { UserLanguagesModule } from './modules/user-languages/user-languages.module.js';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module.js';
     WordsModule,
     AuthModule,
     DashboardModule,
+    UserLanguagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
